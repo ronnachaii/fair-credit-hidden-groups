@@ -1,0 +1,32 @@
+{
+  "decision_rows": 192,
+  "clustering_rows": 36,
+  "representation_rows": 12,
+  "finished_mlflow_runs_checked": 240,
+  "summary_rebuilt_identically_from_csv": true,
+  "notebook": {
+    "cells": 26,
+    "matching_embedded_files": 19,
+    "json_valid": true,
+    "python_cells_compile": true
+  },
+  "predictive_metrics_unchanged_after_instrumentation": true,
+  "fallback_cli_help_passed": true,
+  "fallback_tests": "...s.....                                                                [100%]\n8 passed, 1 skipped in 3.46s",
+  "source_sha256": {
+    "config.py": "b6ba1b5a50976702131184a3da37f522964f90208f7da59289ac102615d61052",
+    "requirements.txt": "5de57310c977e74e0e06286ce85fccacc31462dd66f7f22986c5b6f2dd797ce4",
+    "run_pilot.py": "a9033d95e3305272a9198cf0a65a877d728d71e1dc58c8c2db26b8e4e5fcf81c",
+    "src/fairgroups/__init__.py": "64d45b5e0a89a559ce646034b7f12a2f9179fc5c8d9cddd83acf1e1f85520e6f",
+    "src/fairgroups/clustering.py": "f88445feeb2f75cb5a3e1c7d5e1b87aa180ed475c3bd3a5d834a3023a9c6fe2d",
+    "src/fairgroups/data.py": "7e162c5890063a6a63020ac86304379b5ca2103e203fd9d4c5c2fecdc3767ea2",
+    "src/fairgroups/dro.py": "3f7a2a8e62fb74e43912e316f69c151d4d130dafa326d886a3c68ed6d69d577f",
+    "src/fairgroups/efficiency.py": "052b7740cb5c86f6aca16d46aefe853fdbdbe0eab58244c38609b300b17dbe23",
+    "src/fairgroups/metrics.py": "8b2f534db9731f287ebfe3f2e291394e7de95307d860bb4f496f142a2e0eda40",
+    "src/fairgroups/models.py": "8df989fbffbfec86a0b3a4912c4972a09de65203a2418055973dc49a449e49a5",
+    "src/fairgroups/reporting.py": "914a226cd9aef78c69a246d5c2f3d6c2cf9ebffaa962eeafdc6fbc832e0f9e49",
+    "src/fairgroups/representations.py": "1dd26b7abc2f0256e437cb601a178f0920c6b43563551e9be59170c2da6ae96f",
+    "src/fairgroups/run.py": "9aa14328144b2d54ce4c9db0d24825164bd28c2ed45b0dbed1a452c3a5ce0d06",
+    "src/fairgroups/tracking.py": "51cef0f3f09e385ded9ade3b2bd1179ea0d713745ccd2a21ab51297149054bc9"
+  }
+}

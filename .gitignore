@@ -1,0 +1,18 @@
+data/
+mlruns/
+__pycache__/
+.pytest_cache/
+.pytest_tmp/
+*.pyc
+.DS_Store
+._*
+results/.matplotlib/
+mlflow.db*
+results/demo_bundle.joblib
+results/.gradio/
+# ไฟล์ภายในของทีม (ไม่เผยแพร่)
+CODEX_*.md
+codex_run_*.log
+*.log
+results/.matplotlib/
+results/acs_round1/.matplotlib/
