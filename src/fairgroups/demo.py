@@ -18,6 +18,8 @@ PRIMARY=['loan_amount','income','property_value','loan_to_value_ratio','debt_to_
 def save_bundle(output,bundle):
     cards=pd.read_csv(output/'group_explanations.csv')
     cards=cards[(cards.seed==bundle['seed']) & (cards.method==bundle['method'])]
+    if 'group_definition' in cards:
+        cards=cards[cards.group_definition.eq(bundle['group_definition'])]
     bundle['cards']={int(r['group']):card_text(r) for r in cards.to_dict('records')}
     bundle['inputs']=[c for c in PRIMARY if c in bundle['defaults']][:8]
     joblib.dump(bundle,output/'demo_bundle.joblib',compress=3)
@@ -38,6 +40,17 @@ def predict_application(bundle,*values):
     rep=x if bundle['representation']=='raw' else bundle['scarf_scaler'].transform(encode_scarf(bundle['scarf'],x)).astype(np.float32)
     group=int(bundle['clusterer'].predict(rep)[0])
     result={'โอกาสอนุมัติ ERM':erm,'โอกาสอนุมัติหลังฝึก DRO':fair,'กลุ่ม':group,'วิธี':bundle['method']}
+    result['รูปแบบ DRO']=bundle.get('dro_variant','cy')
+    if bundle.get('postprocess'):
+        pp=bundle['postprocess']
+        pp_rep=x if pp['representation']=='raw' else bundle['scarf_scaler'].transform(encode_scarf(bundle['scarf'],x)).astype(np.float32)
+        pp_group=pp['clusterer'].predict(pp_rep)
+        score=pp['base_model'].predict_proba(x,num_iteration=pp['iteration'])[:,1]
+        threshold=pp['threshold_model'].thresholds_.get(pp_group[0],.5)
+        result.update({'ฐานปรับเกณฑ์':pp['base'],'คะแนนเดิมก่อนปรับเกณฑ์':float(score[0]),
+            'กลุ่มปรับเกณฑ์':int(pp_group[0]),'เกณฑ์รายกลุ่ม':float(threshold),
+            'อนุมัติหลังปรับเกณฑ์':bool(pp['threshold_model'].predict(score,pp_group)[0]),
+            'วิธีปรับเกณฑ์':pp['method'],'เป้าหมายปรับเกณฑ์':pp['objective']})
     warning='⚠️ ต้นแบบเพื่อการวิจัยเท่านั้น ความน่าจะเป็นยังไม่ผ่านการปรับเทียบ ไม่ใช้อนุมัติสินเชื่อจริง และผลทดลองอาจไม่ได้ลดอคติ'
     return result,bundle['cards'].get(group,'ยังไม่มีการ์ดกลุ่มนี้')+'\n\n'+warning
 

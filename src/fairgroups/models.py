@@ -35,26 +35,63 @@ def predict_mlp(model, x):
                                for i in range(0, len(x), 2048)])
 
 
+def worst_accuracy(correct, groups, min_size=1):
+    """ไม่นับ Unknown หรือกลุ่มที่เล็กกว่าเกณฑ์; กลุ่มอนุมานนับทุกกลุ่มที่มีแถว"""
+    values = [float(correct[groups == g].mean()) for g in np.unique(groups)
+              if str(g) != 'Unknown' and (groups == g).sum() >= min_size]
+    if not values:
+        raise ValueError('ไม่มี validation group ที่ผ่านเกณฑ์ขนาด')
+    return min(values)
+
+
+def cross_labels(clusters, y):
+    """กลุ่ม validation = cluster ที่ตัวจัดกลุ่ม train ทำนาย × ป้าย y"""
+    return np.array([f'{c}|y={label}' for c, label in zip(clusters, y)])
+
+
+def selection_rank(selection, scores, accuracy_floor):
+    """ถ้าไม่ผ่าน guard ทุกตัว เลือก average ใกล้ ERM ที่สุดก่อน; เสมอคงตัวแรก"""
+    if selection != 'inferred_worst_group':
+        return (scores[selection],)
+    average = scores['average']; worst = scores[selection]
+    passed = average + 1e-12 >= accuracy_floor
+    return (passed, worst, average) if passed else (passed, average, worst)
+
+
 def validation_scores(y, probability, groups):
-    """average ไม่แตะกลุ่มจริง ส่วน worst-group ใช้เพื่อการวิเคราะห์แยก"""
+    """average ไม่แตะกลุ่มจริง ส่วน worst-group เป็นผลเสริมที่ใช้ประชากร"""
     correct = (probability >= 0.5) == y
-    return {"average": float(correct.mean()),
-            "worst_group": min(float(correct[groups == g].mean()) for g in np.unique(groups) if str(g) != "Unknown")}
+    return {'average': float(correct.mean()), 'worst_group': worst_accuracy(correct, groups)}
+
+
+def parameter_distance(model, initial_model):
+    """ระยะพารามิเตอร์ L2 จาก ERM เริ่มต้น ไม่รวม buffer"""
+    if initial_model is None:
+        return 0.0
+    return float(sum((a.detach() - b.detach()).double().square().sum()
+                     for a, b in zip(model.parameters(), initial_model.parameters())).sqrt())
 
 
 def train_mlp(x, y, xv, yv, val_groups, config, seed, groups=None,
-              sample_weights=None, epochs=None):
-    """ฝึกจำนวนรอบคงที่และเก็บ checkpoint ดีที่สุดของทั้งสองกติกา"""
+              sample_weights=None, epochs=None, initial_model=None, learning_rate=None,
+              inferred_val_groups=None, accuracy_floor=0.0, inferred_min_size=1):
+    """เก็บ checkpoint แต่ละกติกาแยกกัน; guard ใช้กับกติกาหลักของวิธีที่มีกลุ่ม"""
     set_seed(seed, config.threads)
     model = MLP(x.shape[1], config.hidden)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate,
+    if initial_model is not None:
+        model.load_state_dict(copy.deepcopy(initial_model.state_dict()))
+    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate or config.learning_rate,
                                  weight_decay=config.weight_decay)
     xt, yt = torch.as_tensor(x), torch.as_tensor(y, dtype=torch.float32)
     gt = None if groups is None else torch.as_tensor(groups, dtype=torch.long)
     wt = None if sample_weights is None else torch.as_tensor(sample_weights, dtype=torch.float32)
     log_weights = None if groups is None else torch.zeros(int(np.max(groups)) + 1)
-    best_scores = {"average": -1, "worst_group": -1}
-    best_states, best_epochs = {}, {}
+    group_counts = None if groups is None else torch.bincount(gt, minlength=len(log_weights)).float()
+    selections = ["average", "worst_group"]
+    if inferred_val_groups is not None:
+        selections.append("inferred_worst_group")
+    best_ranks = {}
+    best_states, best_epochs, best_metadata = {}, {}, {}
     for epoch in range(epochs or config.epochs):
         model.train()
         order = torch.randperm(len(y))
@@ -62,7 +99,11 @@ def train_mlp(x, y, xv, yv, val_groups, config, seed, groups=None,
             optimizer.zero_grad()
             losses = nn.functional.binary_cross_entropy_with_logits(model(xt[ids]), yt[ids], reduction="none")
             if gt is not None:
-                loss = group_dro_loss(losses, gt[ids], log_weights, config.dro_eta)
+                # น้ำหนักเฉลี่ยหนึ่งภายใน cluster ก่อนแยก y; ไม่หาร sum(w) ซ้ำจน cy_bal หายไป
+                if wt is not None:
+                    losses = losses * wt[ids]
+                loss = group_dro_loss(losses, gt[ids], log_weights, config.dro_eta,
+                                      group_counts, config.dro_adjustment)
             elif wt is not None:
                 # JTT ใช้น้ำหนักคงที่จากโมเดลรอบแรก ไม่เลือกด้วย test
                 loss = (losses * wt[ids]).sum() / wt[ids].sum()
@@ -70,15 +111,32 @@ def train_mlp(x, y, xv, yv, val_groups, config, seed, groups=None,
                 loss = losses.mean()
             loss.backward()
             optimizer.step()
-        scores = validation_scores(yv, predict_mlp(model, xv), val_groups)
-        for selection, score in scores.items():
-            if score > best_scores[selection]:
-                best_scores[selection] = score
+        probability = predict_mlp(model, xv)
+        scores = validation_scores(yv, probability, val_groups)
+        if inferred_val_groups is not None:
+            scores['inferred_worst_group'] = worst_accuracy(
+                (probability >= .5) == yv, inferred_val_groups, inferred_min_size)
+        weights = None if log_weights is None else torch.softmax(log_weights, dim=0)
+        metadata = {**scores, 'accuracy_floor': accuracy_floor,
+                    'accuracy_guard_passed': scores['average'] + 1e-12 >= accuracy_floor,
+                    'parameter_l2_from_erm': parameter_distance(model, initial_model),
+                    'group_weight_min': float(weights.min()) if weights is not None else np.nan,
+                    'group_weight_max': float(weights.max()) if weights is not None else np.nan}
+        for selection in selections:
+            rank = selection_rank(selection, scores, accuracy_floor)
+            if selection not in best_ranks or rank > best_ranks[selection]:
+                best_ranks[selection] = rank
                 best_states[selection] = copy.deepcopy(model.state_dict())
                 best_epochs[selection] = epoch + 1
+                best_metadata[selection] = metadata.copy()
     result = {}
     for selection, state in best_states.items():
         selected = MLP(x.shape[1], config.hidden)
         selected.load_state_dict(state)
-        result[selection] = (selected, best_epochs[selection], best_scores[selection])
+        selected.selection_metadata_ = best_metadata[selection]
+        result[selection] = (selected, best_epochs[selection], best_metadata[selection][selection])
+    model.training_diagnostics_ = {
+        'final_group_weight_min': float(weights.min()) if weights is not None else np.nan,
+        'final_group_weight_max': float(weights.max()) if weights is not None else np.nan,
+        'final_parameter_l2_from_erm': parameter_distance(model, initial_model)}
     return result, model

@@ -20,7 +20,8 @@ def setup_tracking(root):
 
 
 def log_row(row, versions, config, kind='decision'):
-    keys = ['method','representation','k','label_fraction','seed','selection','selected_epoch','n_train','n_test']
+    keys = ['method','representation','k','label_fraction','seed','selection','selected_epoch','n_train','n_test',
+            'dro_variant','group_definition','class_balanced','base','objective','fit_split']
     with mlflow.start_run(run_name=f"{kind}-{row.get('method', row.get('representation','none'))}-{row['seed']}") as run:
         mlflow.set_tags({'kind':kind,'dataset':config.dataset,'state':config.state,'artifact_policy':'none'})
         mlflow.log_params({k:row[k] for k in keys if k in row})

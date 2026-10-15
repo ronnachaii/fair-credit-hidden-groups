@@ -187,6 +187,31 @@
     "learning_rate": 0.002,
     "weight_decay": 0.001,
     "dro_eta": 0.05,
+    "dro_adjustment": 0.0,
+    "dro_eta_grid": [
+      0.01,
+      0.1
+    ],
+    "dro_adjustment_grid": [
+      0.0,
+      1.0
+    ],
+    "min_dro_group": 50,
+    "dro_finetune_epochs": 5,
+    "dro_epoch_grid": [
+      5
+    ],
+    "dro_variants": [
+      "cy",
+      "cy_bal",
+      "c",
+      "c_bal"
+    ],
+    "selection_accuracy_tolerance": 0.02,
+    "dro_learning_rate_grid": [
+      0.0002,
+      0.001
+    ],
     "jtt_upweight": 10.0,
     "jtt_identification_epochs": 3,
     "corruption_rate": 0.6,
@@ -204,15 +229,19 @@
   ],
   "eligible_source_rows": 139963,
   "source_rows": 307343,
-  "wall_seconds": 63.7111654580076,
-  "peak_process_rss_mb": 1526.625,
-  "decision_rows": 96,
-  "clustering_rows": 33,
+  "wall_seconds": 412.5541812500014,
+  "peak_process_rss_mb": 1588.109375,
+  "decision_rows": 489,
+  "clustering_rows": 60,
   "completed": true,
   "colab_runtime_verified": false,
   "hbac_backend": "unsupervised-bias-detection 0.2.6",
-  "new_files": 0,
-  "total_files": 238,
+  "postprocess_rows": 162,
+  "postprocess_fit_seconds": 4.6375098322023405,
+  "postprocess_accuracy_tolerance": 0.02,
+  "postprocess_search": "parity interval bisection 20 steps; EO coordinate descent 10 sweeps, two starts",
+  "new_files": 17,
+  "total_files": 637,
   "new_file_limit": 200,
   "max_new_files_completed_runs": 38
 }

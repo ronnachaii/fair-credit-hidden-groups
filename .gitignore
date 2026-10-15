@@ -16,3 +16,7 @@ codex_run_*.log
 *.log
 results/.matplotlib/
 results/acs_round1/.matplotlib/
+# ผลสำรองของรอบก่อน (เก็บในเครื่อง ไม่เผยแพร่) และไฟล์ตรวจรั่วขนาดใหญ่ (เผยแพร่เป็น .gz แทน)
+results/round*/
+results/**/leakage_audit.json
+results/leakage_audit.json

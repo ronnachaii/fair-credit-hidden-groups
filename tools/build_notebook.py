@@ -67,7 +67,9 @@ for folder in ['src/fairgroups', 'tests', 'results']:
 '''
     cells = [cell("code", first), cell("markdown", "# ต้นแบบนำร่อง Fair Hidden Groups\n"
              "เลือก Runtime → Run all บน CPU; ไม่ต้องอัปโหลด src หรือข้อมูลก่อน\n"
-             "HMDA GA 2023; ประชากรใช้ประเมินและ oracle เท่านั้น · MLflow SQLite ไม่มี artifact รายรัน\n"),
+             "HMDA GA 2023; ประชากรใช้ประเมินและ oracle เท่านั้น · MLflow SQLite ไม่มี artifact รายรัน\n"
+             "รอบ 6 คง DRO และเพิ่ม PP-parity/EO บน ERM-LGBM/MLP: หาเกณฑ์และเลือกด้วย validation เท่านั้น "
+             "พร้อม guard accuracy ลดไม่เกิน 2 จุดร้อยละ; ดูหัวข้อปรับเกณฑ์รายกลุ่มในสรุปและผล PP ท้ายหน้าสาธิต\n"),
              cell("code", setup), cell("code", "%%writefile requirements.txt\n" + requirement),
              cell("code", "%%writefile pytest.ini\n" + (ROOT / "pytest.ini").read_text())]
     for path in embedded_files():

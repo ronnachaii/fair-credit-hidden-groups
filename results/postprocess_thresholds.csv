@@ -1,0 +1,817 @@
+seed,base,method,objective,proposed_selected,selected_without_demographics,group,threshold,n_validation,frozen_small_group,fit_split,unseen_group_threshold
+17,ERM-LGBM,PP-raw-k2,parity,True,True,0,0.8763172425393061,1621,False,validation,0.5
+17,ERM-LGBM,PP-raw-k2,parity,True,True,1,0.27,2379,False,validation,0.5
+17,ERM-LGBM,PP-raw-k2,eo,False,False,0,0.7300000000000002,1621,False,validation,0.5
+17,ERM-LGBM,PP-raw-k2,eo,False,False,1,0.28,2379,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,parity,False,False,0,0.6637732350922866,1562,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,parity,False,False,1,0.08000000000000002,1056,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,parity,False,False,2,0.7744434684539317,1095,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,parity,False,False,3,0.8834596028786847,287,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,eo,False,False,0,0.36000000000000004,1562,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,eo,False,False,1,0.12000000000000001,1056,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,eo,False,False,2,0.44000000000000006,1095,False,validation,0.5
+17,ERM-LGBM,PP-raw-k4,eo,False,False,3,0.8700000000000002,287,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,0,0.4800000000000001,833,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,1,0.8631987689635355,53,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,2,0.49000000000000005,1262,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,3,0.5300000000000001,817,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,4,0.8700000000000002,600,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,5,0.5100000000000001,131,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,6,0.5,11,True,validation,0.5
+17,ERM-LGBM,PP-raw-k8,parity,False,False,7,0.04866147174635662,293,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,0,0.5175962005582192,833,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,1,0.8958191801496708,53,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,2,0.49000000000000005,1262,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,3,0.5300000000000001,817,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,4,0.8800000000000002,600,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,5,0.8393328686548759,131,False,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,6,0.5,11,True,validation,0.5
+17,ERM-LGBM,PP-raw-k8,eo,False,False,7,0.060000000000000005,293,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k2,parity,False,False,0,0.07,663,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k2,parity,False,False,1,0.5300000000000001,3337,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k2,eo,False,False,0,0.23932277508771382,663,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k2,eo,False,False,1,0.5600000000000002,3337,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,parity,False,False,0,0.5100000000000001,1195,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,parity,False,False,1,0.8700000000000002,1234,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,parity,False,False,2,0.11000000000000001,486,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,parity,False,False,3,0.7800000000000001,1085,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,eo,False,False,0,0.6000000000000002,1195,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,eo,False,False,1,0.8600000000000002,1234,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,eo,False,False,2,0.27,486,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k4,eo,False,False,3,0.7114229278971245,1085,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,0,0.6600000000000001,1050,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,1,0.27,570,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,2,0.7400000000000002,445,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,3,0.04748321923214536,439,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,4,0.8300000000000002,119,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,5,0.5,498,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,6,0.44000000000000006,384,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,parity,False,False,7,0.8200000000000002,495,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,0,0.5088462385910006,1050,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,1,0.21000000000000002,570,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,2,0.5200000000000001,445,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,3,0.07,439,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,4,0.8300000000000002,119,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,5,0.7300000000000002,498,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,6,0.32000000000000006,384,False,validation,0.5
+17,ERM-LGBM,PP-scarf-k8,eo,False,False,7,0.6900000000000002,495,False,validation,0.5
+17,ERM-LGBM,PP-GEORGE,parity,False,False,0,0.5206918050558352,3552,False,validation,0.5
+17,ERM-LGBM,PP-GEORGE,parity,False,False,1,0.16976807209904898,448,False,validation,0.5
+17,ERM-LGBM,PP-GEORGE,eo,False,False,0,0.5206918050558352,3552,False,validation,0.5
+17,ERM-LGBM,PP-GEORGE,eo,False,False,1,0.16976807209904898,448,False,validation,0.5
+17,ERM-LGBM,PP-random-k2,parity,False,False,0,0.4100000000000001,1979,False,validation,0.5
+17,ERM-LGBM,PP-random-k2,parity,False,False,1,0.4100000000000001,2021,False,validation,0.5
+17,ERM-LGBM,PP-random-k2,eo,False,False,0,0.4100000000000001,1979,False,validation,0.5
+17,ERM-LGBM,PP-random-k2,eo,False,False,1,0.4100000000000001,2021,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,parity,False,False,0,0.5204714032322453,977,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,parity,False,False,1,0.5480114961771093,1035,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,parity,False,False,2,0.5313151420920283,1002,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,parity,False,False,3,0.5005385898276562,986,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,eo,False,False,0,0.5,977,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,eo,False,False,1,0.5100000000000001,1035,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,eo,False,False,2,0.5200000000000001,1002,False,validation,0.5
+17,ERM-LGBM,PP-random-k4,eo,False,False,3,0.4479510722554267,986,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,0,0.6700000000000002,497,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,1,0.7700000000000002,493,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,2,0.7900000000000001,486,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,3,0.8031546261787271,502,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,4,0.8546612077944594,480,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,5,0.7971540115203218,542,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,6,0.7389023221509899,516,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,parity,False,False,7,0.7966451819992777,484,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,0,0.45000000000000007,497,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,1,0.5235199124078188,493,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,2,0.5255657664946239,486,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,3,0.4800000000000001,502,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,4,0.5200000000000001,480,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,5,0.5100000000000001,542,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,6,0.5200000000000001,516,False,validation,0.5
+17,ERM-LGBM,PP-random-k8,eo,False,False,7,0.4600000000000001,484,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,parity,False,False,0,0.034775800960272996,296,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,parity,False,False,1,0.45000000000000007,766,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,parity,False,False,2,0.5100000000000001,1319,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,parity,False,False,3,0.5900000000000002,1619,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,eo,False,False,0,0.11000000000000001,296,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,eo,False,False,1,0.45000000000000007,766,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,eo,False,False,2,0.25000000000000006,1319,False,validation,0.5
+17,ERM-LGBM,PP-HBAC,eo,False,False,3,0.7000000000000002,1619,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,parity,False,False,0,0.31908421766133443,983,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,parity,False,False,1,0.45000000000000007,1032,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,parity,False,False,2,0.6700000000000002,994,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,parity,False,False,3,0.4600000000000001,991,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,eo,False,False,0,0.3671366323437508,983,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,eo,False,False,1,0.43000000000000005,1032,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,eo,False,False,2,0.6200000000000001,994,False,validation,0.5
+17,ERM-LGBM,PP-geoproxy,eo,False,False,3,0.4700000000000001,991,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Female,0.45000000000000007,122,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Joint,0.5,76,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Male,0.5700000000000002,164,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Female,0.8300000000000002,51,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Joint,0.8100000000000002,78,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Male,0.8728779426883511,139,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Female,0.23000000000000004,413,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Joint,0.35000000000000003,167,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Male,0.5300000000000001,294,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH White × Female,0.3669708211473586,390,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH White × Joint,0.5,667,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,NH White × Male,0.5300000000000001,610,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Other × Female,0.5,16,True,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Other × Joint,0.38000000000000006,66,False,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Other × Male,0.5,11,True,validation,0.5
+17,ERM-LGBM,PP-oracle,parity,False,False,Unknown,0.4749907388484736,736,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Female,0.45000000000000007,122,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Joint,0.29000000000000004,76,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Male,0.2820262120110395,164,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Female,0.8100000000000002,51,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Joint,0.7100000000000002,78,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Male,0.6800000000000002,139,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Female,0.23000000000000004,413,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Joint,0.35000000000000003,167,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Male,0.5300000000000001,294,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH White × Female,0.34,390,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH White × Joint,0.45000000000000007,667,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,NH White × Male,0.5196763805969019,610,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Other × Female,0.5,16,True,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Other × Joint,0.35000000000000003,66,False,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Other × Male,0.5,11,True,validation,0.5
+17,ERM-LGBM,PP-oracle,eo,False,False,Unknown,0.4749907388484736,736,False,validation,0.5
+17,ERM-MLP,PP-raw-k2,parity,True,False,0,0.8300000000000002,1621,False,validation,0.5
+17,ERM-MLP,PP-raw-k2,parity,True,False,1,0.17000000000000004,2379,False,validation,0.5
+17,ERM-MLP,PP-raw-k2,eo,False,False,0,0.7800000000000001,1621,False,validation,0.5
+17,ERM-MLP,PP-raw-k2,eo,False,False,1,0.15597749948501588,2379,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,parity,False,False,0,0.5400000000000001,1562,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,parity,False,False,1,0.03302527964115143,1056,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,parity,False,False,2,0.7400000000000002,1095,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,parity,False,False,3,0.8700000000000002,287,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,eo,False,False,0,0.5,1562,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,eo,False,False,1,0.03302527964115143,1056,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,eo,False,False,2,0.6700000000000002,1095,False,validation,0.5
+17,ERM-MLP,PP-raw-k4,eo,False,False,3,0.8900000000000002,287,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,0,0.45000000000000007,833,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,1,0.5,53,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,2,0.5,1262,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,3,0.6300000000000001,817,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,4,0.5,600,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,5,0.45000000000000007,131,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,6,0.5,11,True,validation,0.5
+17,ERM-MLP,PP-raw-k8,parity,False,False,7,0.009170314148068428,293,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,0,0.45000000000000007,833,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,1,0.5,53,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,2,0.5,1262,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,3,0.6300000000000001,817,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,4,0.5,600,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,5,0.45000000000000007,131,False,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,6,0.5,11,True,validation,0.5
+17,ERM-MLP,PP-raw-k8,eo,False,False,7,0.009170314148068428,293,False,validation,0.5
+17,ERM-MLP,PP-scarf-k2,parity,False,False,0,0.023402924537658697,663,False,validation,0.5
+17,ERM-MLP,PP-scarf-k2,parity,False,False,1,0.5900000000000002,3337,False,validation,0.5
+17,ERM-MLP,PP-scarf-k2,eo,False,False,0,0.05,663,False,validation,0.5
+17,ERM-MLP,PP-scarf-k2,eo,False,False,1,0.5100000000000001,3337,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,parity,False,False,0,0.31000000000000005,1195,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,parity,False,False,1,0.6000000000000002,1234,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,parity,False,False,2,0.010333995474502445,486,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,parity,False,False,3,0.45000000000000007,1085,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,eo,False,False,0,0.31000000000000005,1195,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,eo,False,False,1,0.870207691192627,1234,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,eo,False,False,2,0.1,486,False,validation,0.5
+17,ERM-MLP,PP-scarf-k4,eo,False,False,3,0.5300000000000001,1085,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,0,0.6600000000000001,1050,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,1,0.5,570,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,2,0.7600000000000002,445,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,3,0.010321610122919083,439,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,4,0.7600000000000002,119,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,5,0.6800000000000002,498,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,6,0.45000000000000007,384,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,parity,False,False,7,0.5900000000000002,495,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,0,0.7200000000000002,1050,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,1,0.26000000000000006,570,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,2,0.7100000000000002,445,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,3,0.0495102596282959,439,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,4,0.8034594106674194,119,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,5,0.7350504487752915,498,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,6,0.34,384,False,validation,0.5
+17,ERM-MLP,PP-scarf-k8,eo,False,False,7,0.5900000000000002,495,False,validation,0.5
+17,ERM-MLP,PP-GEORGE,parity,False,False,0,0.5,3552,False,validation,0.5
+17,ERM-MLP,PP-GEORGE,parity,False,False,1,0.11000000000000001,448,False,validation,0.5
+17,ERM-MLP,PP-GEORGE,eo,False,False,0,0.5,3552,False,validation,0.5
+17,ERM-MLP,PP-GEORGE,eo,False,False,1,0.11000000000000001,448,False,validation,0.5
+17,ERM-MLP,PP-random-k2,parity,False,False,0,0.19,1979,False,validation,0.5
+17,ERM-MLP,PP-random-k2,parity,False,False,1,0.18000000000000005,2021,False,validation,0.5
+17,ERM-MLP,PP-random-k2,eo,False,False,0,0.21000000000000002,1979,False,validation,0.5
+17,ERM-MLP,PP-random-k2,eo,False,False,1,0.18000000000000005,2021,False,validation,0.5
+17,ERM-MLP,PP-random-k4,parity,False,False,0,0.5359509801864624,977,False,validation,0.5
+17,ERM-MLP,PP-random-k4,parity,False,False,1,0.5631458973884582,1035,False,validation,0.5
+17,ERM-MLP,PP-random-k4,parity,False,False,2,0.5424788069725036,1002,False,validation,0.5
+17,ERM-MLP,PP-random-k4,parity,False,False,3,0.518760085105896,986,False,validation,0.5
+17,ERM-MLP,PP-random-k4,eo,False,False,0,0.43000000000000005,977,False,validation,0.5
+17,ERM-MLP,PP-random-k4,eo,False,False,1,0.5,1035,False,validation,0.5
+17,ERM-MLP,PP-random-k4,eo,False,False,2,0.4600000000000001,1002,False,validation,0.5
+17,ERM-MLP,PP-random-k4,eo,False,False,3,0.45000000000000007,986,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,0,0.6430577850341797,497,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,1,0.7500000000000002,493,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,2,0.7862969756126403,486,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,3,0.7634214758872986,502,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,4,0.7663470768928528,480,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,5,0.7721895694732666,542,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,6,0.7283343195915223,516,False,validation,0.5
+17,ERM-MLP,PP-random-k8,parity,False,False,7,0.7620696592330932,484,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,0,0.4000000000000001,497,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,1,0.5,493,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,2,0.4100000000000001,486,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,3,0.4000000000000001,502,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,4,0.4800000000000001,480,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,5,0.5191778403520584,542,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,6,0.4600000000000001,516,False,validation,0.5
+17,ERM-MLP,PP-random-k8,eo,False,False,7,0.45000000000000007,484,False,validation,0.5
+17,ERM-MLP,PP-HBAC,parity,False,False,0,0.006415225472301245,296,False,validation,0.5
+17,ERM-MLP,PP-HBAC,parity,False,False,1,0.17000000000000004,766,False,validation,0.5
+17,ERM-MLP,PP-HBAC,parity,False,False,2,0.5,1319,False,validation,0.5
+17,ERM-MLP,PP-HBAC,parity,False,False,3,0.5900000000000002,1619,False,validation,0.5
+17,ERM-MLP,PP-HBAC,eo,False,False,0,0.010873323213309052,296,False,validation,0.5
+17,ERM-MLP,PP-HBAC,eo,False,False,1,0.38000000000000006,766,False,validation,0.5
+17,ERM-MLP,PP-HBAC,eo,False,False,2,0.19,1319,False,validation,0.5
+17,ERM-MLP,PP-HBAC,eo,False,False,3,0.6400000000000001,1619,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,parity,False,True,0,0.15000000000000002,983,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,parity,False,True,1,0.4600000000000001,1032,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,parity,False,True,2,0.6400000000000001,994,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,parity,False,True,3,0.4000000000000001,991,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,eo,False,False,0,0.2,983,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,eo,False,False,1,0.35000000000000003,1032,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,eo,False,False,2,0.5300000000000001,994,False,validation,0.5
+17,ERM-MLP,PP-geoproxy,eo,False,False,3,0.35000000000000003,991,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Female,0.5,122,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Joint,0.45928826928138733,76,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Male,0.5,164,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Female,0.8200000000000002,51,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Joint,0.8200000000000002,78,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Male,0.7700000000000002,139,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH Black × Female,0.5200000000000001,413,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH Black × Joint,0.5,167,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH Black × Male,0.6331045985221863,294,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH White × Female,0.5,390,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH White × Joint,0.5,667,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,NH White × Male,0.5200000000000001,610,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Other × Female,0.5,16,True,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Other × Joint,0.5,66,False,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Other × Male,0.5,11,True,validation,0.5
+17,ERM-MLP,PP-oracle,parity,False,False,Unknown,0.5100000000000001,736,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Female,0.5,122,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Joint,0.18000000000000005,76,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Male,0.5,164,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Female,0.8200000000000002,51,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Joint,0.7600000000000002,78,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Male,0.7100000000000002,139,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH Black × Female,0.5200000000000001,413,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH Black × Joint,0.5,167,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH Black × Male,0.6331045985221863,294,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH White × Female,0.16000000000000003,390,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH White × Joint,0.38000000000000006,667,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,NH White × Male,0.32000000000000006,610,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Other × Female,0.5,16,True,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Other × Joint,0.11000000000000001,66,False,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Other × Male,0.5,11,True,validation,0.5
+17,ERM-MLP,PP-oracle,eo,False,False,Unknown,0.5100000000000001,736,False,validation,0.5
+29,ERM-LGBM,PP-raw-k2,parity,False,False,0,0.26301073296152533,2348,False,validation,0.5
+29,ERM-LGBM,PP-raw-k2,parity,False,False,1,0.8600000000000002,1652,False,validation,0.5
+29,ERM-LGBM,PP-raw-k2,eo,False,False,0,0.16000000000000003,2348,False,validation,0.5
+29,ERM-LGBM,PP-raw-k2,eo,False,False,1,0.5800000000000002,1652,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,parity,False,False,0,0.8225249561831072,1077,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,parity,False,False,1,0.6200000000000001,1525,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,parity,False,False,2,0.8595704733191231,329,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,parity,False,False,3,0.11000000000000001,1069,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,eo,False,False,0,0.5300000000000001,1077,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,eo,False,False,1,0.29000000000000004,1525,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,eo,False,False,2,0.7386444114521354,329,False,validation,0.5
+29,ERM-LGBM,PP-raw-k4,eo,False,False,3,0.19362545523318925,1069,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,0,0.5,775,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,1,0.7400000000000002,551,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,2,0.6200000000000001,501,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,3,0.0527129303281203,415,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,4,0.5600000000000002,929,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,5,0.5,758,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,6,0.5,12,True,validation,0.5
+29,ERM-LGBM,PP-raw-k8,parity,False,False,7,0.5,59,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,0,0.38000000000000006,775,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,1,0.7400000000000002,551,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,2,0.5500000000000002,501,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,3,0.058310792474704914,415,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,4,0.28,929,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,5,0.5,758,False,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,6,0.5,12,True,validation,0.5
+29,ERM-LGBM,PP-raw-k8,eo,False,False,7,0.5,59,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k2,parity,True,False,0,0.4000000000000001,2771,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k2,parity,True,False,1,0.8900000000000002,1229,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k2,eo,False,False,0,0.18000000000000005,2771,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k2,eo,False,False,1,0.7500000000000002,1229,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,parity,False,False,0,0.7600000000000002,732,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,parity,False,False,1,0.09000000000000001,631,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,parity,False,False,2,0.6200000000000001,2097,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,parity,False,False,3,0.7378900230507194,540,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,eo,False,False,0,0.8000000000000002,732,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,eo,False,False,1,0.1452811151875635,631,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,eo,False,False,2,0.6500000000000001,2097,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k4,eo,False,False,3,0.7300000000000002,540,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,0,0.8200000000000002,377,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,1,0.6192481216830715,947,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,2,0.5,72,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,3,0.7700000000000002,729,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,4,0.7380231504156751,391,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,5,0.05717858667738273,411,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,6,0.6500000000000001,668,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,parity,False,False,7,0.6500000000000001,405,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,0,0.6000000000000002,377,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,1,0.6192481216830715,947,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,2,0.5,72,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,3,0.7700000000000002,729,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,4,0.7380231504156751,391,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,5,0.06132415770243287,411,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,6,0.6500000000000001,668,False,validation,0.5
+29,ERM-LGBM,PP-scarf-k8,eo,False,False,7,0.7600000000000002,405,False,validation,0.5
+29,ERM-LGBM,PP-GEORGE,parity,False,False,0,0.39000000000000007,3181,False,validation,0.5
+29,ERM-LGBM,PP-GEORGE,parity,False,False,1,0.9300000000000002,819,False,validation,0.5
+29,ERM-LGBM,PP-GEORGE,eo,False,False,0,0.39000000000000007,3181,False,validation,0.5
+29,ERM-LGBM,PP-GEORGE,eo,False,False,1,0.9300000000000002,819,False,validation,0.5
+29,ERM-LGBM,PP-random-k2,parity,False,False,0,0.32000000000000006,2019,False,validation,0.5
+29,ERM-LGBM,PP-random-k2,parity,False,False,1,0.25000000000000006,1981,False,validation,0.5
+29,ERM-LGBM,PP-random-k2,eo,False,False,0,0.5300000000000001,2019,False,validation,0.5
+29,ERM-LGBM,PP-random-k2,eo,False,False,1,0.5,1981,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,parity,False,False,0,0.6826203680540288,1017,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,parity,False,False,1,0.5300000000000001,995,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,parity,False,False,2,0.6827880902512058,1002,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,parity,False,False,3,0.5679839458368893,986,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,eo,False,False,0,0.5500000000000002,1017,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,eo,False,False,1,0.49000000000000005,995,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,eo,False,False,2,0.4600000000000001,1002,False,validation,0.5
+29,ERM-LGBM,PP-random-k4,eo,False,False,3,0.5062746692177946,986,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,0,0.44810284256835486,504,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,1,0.39000000000000007,501,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,2,0.4700000000000001,480,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,3,0.5100000000000001,475,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,4,0.5,513,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,5,0.42000000000000004,494,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,6,0.41088477181321914,522,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,parity,False,False,7,0.38000000000000006,511,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,0,0.35000000000000003,504,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,1,0.30000000000000004,501,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,2,0.28,480,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,3,0.34,475,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,4,0.5200000000000001,513,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,5,0.42000000000000004,494,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,6,0.36000000000000004,522,False,validation,0.5
+29,ERM-LGBM,PP-random-k8,eo,False,False,7,0.39000000000000007,511,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,parity,False,False,0,0.07,304,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,parity,False,False,1,0.5,99,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,parity,False,False,2,0.5900000000000002,1945,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,parity,False,False,3,0.7400000000000002,1652,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,eo,False,False,0,0.08000000000000002,304,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,eo,False,False,1,0.42000000000000004,99,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,eo,False,False,2,0.4800000000000001,1945,False,validation,0.5
+29,ERM-LGBM,PP-HBAC,eo,False,False,3,0.6400000000000001,1652,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,parity,False,True,0,0.17000000000000004,987,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,parity,False,True,1,0.4549814238752225,997,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,parity,False,True,2,0.44987310062130437,985,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,parity,False,True,3,0.5573309394710306,1031,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,eo,False,False,0,0.35000000000000003,987,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,eo,False,False,1,0.44000000000000006,997,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,eo,False,False,2,0.37000000000000005,985,False,validation,0.5
+29,ERM-LGBM,PP-geoproxy,eo,False,False,3,0.6800000000000002,1031,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Female,0.5,106,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Joint,0.6900000000000002,70,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Male,0.7000000000000002,185,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Female,0.8972601904113378,59,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Joint,0.8700000000000002,64,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Male,0.8800000000000002,148,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Female,0.20979119551357484,412,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Joint,0.35000000000000003,188,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Male,0.36000000000000004,274,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH White × Female,0.5700000000000002,399,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH White × Joint,0.7400000000000002,687,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,NH White × Male,0.756821275821399,580,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Other × Female,0.5,7,True,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Other × Joint,0.8000000000000002,69,False,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Other × Male,0.5,16,True,validation,0.5
+29,ERM-LGBM,PP-oracle,parity,False,False,Unknown,0.5600000000000002,736,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Female,0.5,106,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Joint,0.6900000000000002,70,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Male,0.7000000000000002,185,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Female,0.8972601904113378,59,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Joint,0.8700000000000002,64,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Male,0.8800000000000002,148,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Female,0.20979119551357484,412,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Joint,0.35000000000000003,188,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Male,0.49691648246882836,274,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH White × Female,0.5700000000000002,399,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH White × Joint,0.7400000000000002,687,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,NH White × Male,0.756821275821399,580,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Other × Female,0.5,7,True,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Other × Joint,0.8000000000000002,69,False,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Other × Male,0.5,16,True,validation,0.5
+29,ERM-LGBM,PP-oracle,eo,False,False,Unknown,0.5600000000000002,736,False,validation,0.5
+29,ERM-MLP,PP-raw-k2,parity,False,False,0,0.29000000000000004,2348,False,validation,0.5
+29,ERM-MLP,PP-raw-k2,parity,False,False,1,0.8208975929021836,1652,False,validation,0.5
+29,ERM-MLP,PP-raw-k2,eo,False,False,0,0.13,2348,False,validation,0.5
+29,ERM-MLP,PP-raw-k2,eo,False,False,1,0.5,1652,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,parity,False,False,0,0.7300000000000002,1077,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,parity,False,False,1,0.5100000000000001,1525,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,parity,False,False,2,0.8534378314018249,329,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,parity,False,False,3,0.07,1069,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,eo,False,False,0,0.6800000000000002,1077,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,eo,False,False,1,0.4100000000000001,1525,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,eo,False,False,2,0.8400000000000002,329,False,validation,0.5
+29,ERM-MLP,PP-raw-k4,eo,False,False,3,0.18000000000000005,1069,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,0,0.45000000000000007,775,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,1,0.4100000000000001,551,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,2,0.38000000000000006,501,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,3,0.029722446203231813,415,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,4,0.5300000000000001,929,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,5,0.5100000000000001,758,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,6,0.5,12,True,validation,0.5
+29,ERM-MLP,PP-raw-k8,parity,False,False,7,0.5,59,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,0,0.45000000000000007,775,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,1,0.4100000000000001,551,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,2,0.38000000000000006,501,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,3,0.04057398617267609,415,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,4,0.45000000000000007,929,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,5,0.5100000000000001,758,False,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,6,0.5,12,True,validation,0.5
+29,ERM-MLP,PP-raw-k8,eo,False,False,7,0.5,59,False,validation,0.5
+29,ERM-MLP,PP-scarf-k2,parity,True,True,0,0.27,2771,False,validation,0.5
+29,ERM-MLP,PP-scarf-k2,parity,True,True,1,0.8700000000000002,1229,False,validation,0.5
+29,ERM-MLP,PP-scarf-k2,eo,False,False,0,0.39000000000000007,2771,False,validation,0.5
+29,ERM-MLP,PP-scarf-k2,eo,False,False,1,0.8700000000000002,1229,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,parity,False,False,0,0.7300000000000002,732,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,parity,False,False,1,0.09000000000000001,631,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,parity,False,False,2,0.5400000000000001,2097,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,parity,False,False,3,0.7400000000000002,540,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,eo,False,False,0,0.7300000000000002,732,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,eo,False,False,1,0.09000000000000001,631,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,eo,False,False,2,0.5200000000000001,2097,False,validation,0.5
+29,ERM-MLP,PP-scarf-k4,eo,False,False,3,0.7400000000000002,540,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,0,0.21000000000000002,377,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,1,0.5400000000000001,947,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,2,0.5,72,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,3,0.6700000000000002,729,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,4,0.7900000000000001,391,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,5,0.038401306420564656,411,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,6,0.4000000000000001,668,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,parity,False,False,7,0.23000000000000004,405,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,0,0.6259932422637939,377,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,1,0.5400000000000001,947,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,2,0.6842378133535385,72,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,3,0.6700000000000002,729,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,4,0.7900000000000001,391,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,5,0.04945941418409347,411,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,6,0.4000000000000001,668,False,validation,0.5
+29,ERM-MLP,PP-scarf-k8,eo,False,False,7,0.7000000000000002,405,False,validation,0.5
+29,ERM-MLP,PP-GEORGE,parity,False,False,0,0.39768869280815117,3181,False,validation,0.5
+29,ERM-MLP,PP-GEORGE,parity,False,False,1,0.98701127409935,819,False,validation,0.5
+29,ERM-MLP,PP-GEORGE,eo,False,False,0,0.39768869280815117,3181,False,validation,0.5
+29,ERM-MLP,PP-GEORGE,eo,False,False,1,0.98701127409935,819,False,validation,0.5
+29,ERM-MLP,PP-random-k2,parity,False,False,0,0.6500000000000001,2019,False,validation,0.5
+29,ERM-MLP,PP-random-k2,parity,False,False,1,0.5700000000000002,1981,False,validation,0.5
+29,ERM-MLP,PP-random-k2,eo,False,False,0,0.6100000000000001,2019,False,validation,0.5
+29,ERM-MLP,PP-random-k2,eo,False,False,1,0.5,1981,False,validation,0.5
+29,ERM-MLP,PP-random-k4,parity,False,False,0,0.6366575980186463,1017,False,validation,0.5
+29,ERM-MLP,PP-random-k4,parity,False,False,1,0.5500000000000002,995,False,validation,0.5
+29,ERM-MLP,PP-random-k4,parity,False,False,2,0.6863078081607819,1002,False,validation,0.5
+29,ERM-MLP,PP-random-k4,parity,False,False,3,0.5692775726318361,986,False,validation,0.5
+29,ERM-MLP,PP-random-k4,eo,False,False,0,0.6536775469779968,1017,False,validation,0.5
+29,ERM-MLP,PP-random-k4,eo,False,False,1,0.6100000000000001,995,False,validation,0.5
+29,ERM-MLP,PP-random-k4,eo,False,False,2,0.6800000000000002,1002,False,validation,0.5
+29,ERM-MLP,PP-random-k4,eo,False,False,3,0.5692775726318361,986,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,0,0.44726668596267705,504,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,1,0.4000000000000001,501,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,2,0.6200000000000001,480,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,3,0.45633109211921696,475,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,4,0.5454333662986756,513,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,5,0.3815948307514191,494,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,6,0.4198222100734711,522,False,validation,0.5
+29,ERM-MLP,PP-random-k8,parity,False,False,7,0.35000000000000003,511,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,0,0.44726668596267705,504,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,1,0.4000000000000001,501,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,2,0.44000000000000006,480,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,3,0.45633109211921696,475,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,4,0.6500000000000001,513,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,5,0.42000000000000004,494,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,6,0.5,522,False,validation,0.5
+29,ERM-MLP,PP-random-k8,eo,False,False,7,0.5,511,False,validation,0.5
+29,ERM-MLP,PP-HBAC,parity,False,False,0,0.046384443715214704,304,False,validation,0.5
+29,ERM-MLP,PP-HBAC,parity,False,False,1,0.30000000000000004,99,False,validation,0.5
+29,ERM-MLP,PP-HBAC,parity,False,False,2,0.4600000000000001,1945,False,validation,0.5
+29,ERM-MLP,PP-HBAC,parity,False,False,3,0.41037055969238284,1652,False,validation,0.5
+29,ERM-MLP,PP-HBAC,eo,False,False,0,0.05,304,False,validation,0.5
+29,ERM-MLP,PP-HBAC,eo,False,False,1,0.5,99,False,validation,0.5
+29,ERM-MLP,PP-HBAC,eo,False,False,2,0.4600000000000001,1945,False,validation,0.5
+29,ERM-MLP,PP-HBAC,eo,False,False,3,0.5400000000000001,1652,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,parity,False,False,0,0.16561038374900816,987,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,parity,False,False,1,0.5200000000000001,997,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,parity,False,False,2,0.41363348960876467,985,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,parity,False,False,3,0.49000000000000005,1031,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,eo,False,False,0,0.34,987,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,eo,False,False,1,0.45000000000000007,997,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,eo,False,False,2,0.36000000000000004,985,False,validation,0.5
+29,ERM-MLP,PP-geoproxy,eo,False,False,3,0.6100000000000001,1031,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Female,0.24000000000000005,106,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Joint,0.5,70,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Male,0.5,185,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Female,0.7250345706939697,59,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Joint,0.6400000000000001,64,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Male,0.7900000000000001,148,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH Black × Female,0.2,412,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH Black × Joint,0.28,188,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH Black × Male,0.42000000000000004,274,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH White × Female,0.35000000000000003,399,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH White × Joint,0.4840285110473633,687,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,NH White × Male,0.4700000000000001,580,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Other × Female,0.5,7,True,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Other × Joint,0.6718120694160461,69,False,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Other × Male,0.5,16,True,validation,0.5
+29,ERM-MLP,PP-oracle,parity,False,False,Unknown,0.4000000000000001,736,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Female,0.24000000000000005,106,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Joint,0.5,70,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Male,0.5,185,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Female,0.7250345706939697,59,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Joint,0.6400000000000001,64,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Male,0.7900000000000001,148,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH Black × Female,0.2,412,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH Black × Joint,0.28,188,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH Black × Male,0.42000000000000004,274,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH White × Female,0.35000000000000003,399,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH White × Joint,0.6600000000000001,687,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,NH White × Male,0.4700000000000001,580,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Other × Female,0.5,7,True,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Other × Joint,0.6718120694160461,69,False,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Other × Male,0.5,16,True,validation,0.5
+29,ERM-MLP,PP-oracle,eo,False,False,Unknown,0.5200000000000001,736,False,validation,0.5
+43,ERM-LGBM,PP-raw-k2,parity,True,True,0,0.19838183502661094,2394,False,validation,0.5
+43,ERM-LGBM,PP-raw-k2,parity,True,True,1,0.8378321423696318,1606,False,validation,0.5
+43,ERM-LGBM,PP-raw-k2,eo,False,False,0,0.1,2394,False,validation,0.5
+43,ERM-LGBM,PP-raw-k2,eo,False,False,1,0.4800000000000001,1606,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,parity,False,False,0,0.06961588883947148,1096,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,parity,False,False,1,0.8990955613961172,199,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,parity,False,False,2,0.6700000000000002,1093,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,parity,False,False,3,0.6000000000000002,1612,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,eo,False,False,0,0.08000000000000002,1096,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,eo,False,False,1,0.6100000000000001,199,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,eo,False,False,2,0.4600000000000001,1093,False,validation,0.5
+43,ERM-LGBM,PP-raw-k4,eo,False,False,3,0.21000000000000002,1612,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,0,0.5,15,True,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,1,0.5500000000000002,809,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,2,0.5,38,True,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,3,0.6600000000000001,564,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,4,0.19,853,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,5,0.5800000000000002,1287,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,6,0.09000000000000001,384,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,parity,False,False,7,0.01637487788107851,50,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,0,0.5,15,True,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,1,0.4700000000000001,809,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,2,0.5,38,True,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,3,0.5400000000000001,564,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,4,0.19,853,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,5,0.5100000000000001,1287,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,6,0.16000000000000003,384,False,validation,0.5
+43,ERM-LGBM,PP-raw-k8,eo,False,False,7,0.01637487788107851,50,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k2,parity,False,False,0,0.5900000000000002,3549,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k2,parity,False,False,1,0.04994430005812663,451,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k2,eo,False,False,0,0.5900000000000002,3549,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k2,eo,False,False,1,0.04994430005812663,451,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,parity,False,False,0,0.5500000000000002,864,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,parity,False,False,1,0.6500000000000001,1510,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,parity,False,False,2,0.5600000000000002,1186,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,parity,False,False,3,0.04641500831489275,440,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,eo,False,False,0,0.5500000000000002,864,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,eo,False,False,1,0.6500000000000001,1510,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,eo,False,False,2,0.7700000000000002,1186,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k4,eo,False,False,3,0.07,440,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,0,0.46923056348123604,561,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,1,0.5500000000000002,570,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,2,0.044322695558873304,420,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,3,0.5619300536805193,464,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,4,0.5800000000000002,652,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,5,0.6400000000000001,678,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,6,0.6500000000000001,291,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,parity,False,False,7,0.5,364,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,0,0.45000000000000007,561,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,1,0.5500000000000002,570,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,2,0.05,420,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,3,0.5900000000000002,464,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,4,0.5700000000000002,652,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,5,0.4600000000000001,678,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,6,0.5,291,False,validation,0.5
+43,ERM-LGBM,PP-scarf-k8,eo,False,False,7,0.5,364,False,validation,0.5
+43,ERM-LGBM,PP-GEORGE,parity,False,False,0,0.5505899714369951,3412,False,validation,0.5
+43,ERM-LGBM,PP-GEORGE,parity,False,False,1,0.1096556972468515,588,False,validation,0.5
+43,ERM-LGBM,PP-GEORGE,eo,False,False,0,0.5505899714369951,3412,False,validation,0.5
+43,ERM-LGBM,PP-GEORGE,eo,False,False,1,0.1096556972468515,588,False,validation,0.5
+43,ERM-LGBM,PP-random-k2,parity,False,False,0,0.38112665354488023,2005,False,validation,0.5
+43,ERM-LGBM,PP-random-k2,parity,False,False,1,0.4681984875606504,1995,False,validation,0.5
+43,ERM-LGBM,PP-random-k2,eo,False,False,0,0.5100000000000001,2005,False,validation,0.5
+43,ERM-LGBM,PP-random-k2,eo,False,False,1,0.5,1995,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,parity,False,False,0,0.31000000000000005,1010,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,parity,False,False,1,0.4100000000000001,1021,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,parity,False,False,2,0.17000000000000004,995,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,parity,False,False,3,0.28,974,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,eo,False,False,0,0.30000000000000004,1010,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,eo,False,False,1,0.26000000000000006,1021,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,eo,False,False,2,0.29000000000000004,995,False,validation,0.5
+43,ERM-LGBM,PP-random-k4,eo,False,False,3,0.28,974,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,0,0.37000000000000005,531,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,1,0.550657981640889,516,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,2,0.44000000000000006,508,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,3,0.5,476,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,4,0.5164252297710263,479,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,5,0.5,505,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,6,0.35000000000000003,487,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,parity,False,False,7,0.49709854195537456,498,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,0,0.4800000000000001,531,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,1,0.5,516,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,2,0.6700000000000002,508,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,3,0.5,476,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,4,0.4800000000000001,479,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,5,0.4700000000000001,505,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,6,0.43000000000000005,487,False,validation,0.5
+43,ERM-LGBM,PP-random-k8,eo,False,False,7,0.5800000000000002,498,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,parity,False,False,0,0.04038819157919978,345,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,parity,False,False,1,0.5600000000000002,712,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,parity,False,False,2,0.4700000000000001,1331,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,parity,False,False,3,0.5800000000000002,1612,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,eo,False,False,0,0.04960489902198933,345,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,eo,False,False,1,0.5600000000000002,712,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,eo,False,False,2,0.11000000000000001,1331,False,validation,0.5
+43,ERM-LGBM,PP-HBAC,eo,False,False,3,0.5100000000000001,1612,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,parity,False,False,0,0.04997910103577777,964,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,parity,False,False,1,0.41896913734962055,1002,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,parity,False,False,2,0.4306748162067307,1029,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,parity,False,False,3,0.28,1005,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,eo,False,False,0,0.08214952768944515,964,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,eo,False,False,1,0.39000000000000007,1002,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,eo,False,False,2,0.38000000000000006,1029,False,validation,0.5
+43,ERM-LGBM,PP-geoproxy,eo,False,False,3,0.39000000000000007,1005,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Female,0.37000000000000005,123,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Joint,0.6000000000000002,63,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Hispanic × Male,0.45000000000000007,175,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Female,0.6900000000000002,61,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Joint,0.9065615318300506,69,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH Asian × Male,0.8900000000000002,141,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Female,0.44000000000000006,414,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Joint,0.4800000000000001,174,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH Black × Male,0.4718042392676336,285,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH White × Female,0.39000000000000007,385,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH White × Joint,0.5900000000000002,688,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,NH White × Male,0.5100000000000001,589,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Other × Female,0.5,12,True,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Other × Joint,0.748396585693267,70,False,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Other × Male,0.5,11,True,validation,0.5
+43,ERM-LGBM,PP-oracle,parity,False,False,Unknown,0.42000000000000004,740,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Female,0.37000000000000005,123,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Joint,0.6000000000000002,63,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Hispanic × Male,0.45000000000000007,175,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Female,0.6900000000000002,61,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Joint,0.9065615318300506,69,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH Asian × Male,0.8842733242673394,141,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Female,0.44000000000000006,414,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Joint,0.4800000000000001,174,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH Black × Male,0.4718042392676336,285,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH White × Female,0.37000000000000005,385,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH White × Joint,0.5900000000000002,688,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,NH White × Male,0.5100000000000001,589,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Other × Female,0.5,12,True,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Other × Joint,0.748396585693267,70,False,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Other × Male,0.5,11,True,validation,0.5
+43,ERM-LGBM,PP-oracle,eo,False,False,Unknown,0.42000000000000004,740,False,validation,0.5
+43,ERM-MLP,PP-raw-k2,parity,True,False,0,0.38000000000000006,2394,False,validation,0.5
+43,ERM-MLP,PP-raw-k2,parity,True,False,1,0.8298342645168304,1606,False,validation,0.5
+43,ERM-MLP,PP-raw-k2,eo,False,False,0,0.1,2394,False,validation,0.5
+43,ERM-MLP,PP-raw-k2,eo,False,False,1,0.44000000000000006,1606,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,parity,False,False,0,0.05324926711618901,1096,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,parity,False,False,1,0.7700000000000002,199,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,parity,False,False,2,0.7248699307441712,1093,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,parity,False,False,3,0.5400000000000001,1612,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,eo,False,False,0,0.06731044799089433,1096,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,eo,False,False,1,0.5,199,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,eo,False,False,2,0.5500000000000002,1093,False,validation,0.5
+43,ERM-MLP,PP-raw-k4,eo,False,False,3,0.27,1612,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,0,0.5,15,True,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,1,0.28,809,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,2,0.5,38,True,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,3,0.4100000000000001,564,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,4,0.5,853,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,5,0.5400000000000001,1287,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,6,0.05912992484867574,384,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,parity,False,False,7,0.0029925797577016054,50,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,0,0.5,15,True,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,1,0.28,809,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,2,0.5,38,True,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,3,0.4100000000000001,564,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,4,0.5,853,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,5,0.44000000000000006,1287,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,6,0.0663377246260643,384,False,validation,0.5
+43,ERM-MLP,PP-raw-k8,eo,False,False,7,0.0029925797577016054,50,False,validation,0.5
+43,ERM-MLP,PP-scarf-k2,parity,False,False,0,0.4800000000000001,3549,False,validation,0.5
+43,ERM-MLP,PP-scarf-k2,parity,False,False,1,0.041519660502672195,451,False,validation,0.5
+43,ERM-MLP,PP-scarf-k2,eo,False,False,0,0.4800000000000001,3549,False,validation,0.5
+43,ERM-MLP,PP-scarf-k2,eo,False,False,1,0.041519660502672195,451,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,parity,False,False,0,0.5400000000000001,864,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,parity,False,False,1,0.4100000000000001,1510,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,parity,False,False,2,0.5,1186,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,parity,False,False,3,0.03794248215854168,440,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,eo,False,False,0,0.6200000000000001,864,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,eo,False,False,1,0.4100000000000001,1510,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,eo,False,False,2,0.7557726383209229,1186,False,validation,0.5
+43,ERM-MLP,PP-scarf-k4,eo,False,False,3,0.08735543876886369,440,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,0,0.2,561,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,1,0.6200000000000001,570,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,2,0.029165550619363784,420,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,3,0.33,464,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,4,0.2,652,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,5,0.29000000000000004,678,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,6,0.31000000000000005,291,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,parity,False,False,7,0.5,364,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,0,0.33,561,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,1,0.6200000000000001,570,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,2,0.03767833195626735,420,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,3,0.5,464,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,4,0.2,652,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,5,0.29000000000000004,678,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,6,0.18000000000000005,291,False,validation,0.5
+43,ERM-MLP,PP-scarf-k8,eo,False,False,7,0.4000000000000001,364,False,validation,0.5
+43,ERM-MLP,PP-GEORGE,parity,False,False,0,0.5,3412,False,validation,0.5
+43,ERM-MLP,PP-GEORGE,parity,False,False,1,0.13,588,False,validation,0.5
+43,ERM-MLP,PP-GEORGE,eo,False,False,0,0.5,3412,False,validation,0.5
+43,ERM-MLP,PP-GEORGE,eo,False,False,1,0.13,588,False,validation,0.5
+43,ERM-MLP,PP-random-k2,parity,False,False,0,0.28983397483825685,2005,False,validation,0.5
+43,ERM-MLP,PP-random-k2,parity,False,False,1,0.41375050544738773,1995,False,validation,0.5
+43,ERM-MLP,PP-random-k2,eo,False,False,0,0.4600000000000001,2005,False,validation,0.5
+43,ERM-MLP,PP-random-k2,eo,False,False,1,0.41375050544738773,1995,False,validation,0.5
+43,ERM-MLP,PP-random-k4,parity,False,False,0,0.22789749264717102,1010,False,validation,0.5
+43,ERM-MLP,PP-random-k4,parity,False,False,1,0.33,1021,False,validation,0.5
+43,ERM-MLP,PP-random-k4,parity,False,False,2,0.1576847797632217,995,False,validation,0.5
+43,ERM-MLP,PP-random-k4,parity,False,False,3,0.27,974,False,validation,0.5
+43,ERM-MLP,PP-random-k4,eo,False,False,0,0.2,1010,False,validation,0.5
+43,ERM-MLP,PP-random-k4,eo,False,False,1,0.25000000000000006,1021,False,validation,0.5
+43,ERM-MLP,PP-random-k4,eo,False,False,2,0.1995225310325622,995,False,validation,0.5
+43,ERM-MLP,PP-random-k4,eo,False,False,3,0.23000000000000004,974,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,0,0.27898011505603787,531,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,1,0.5700000000000002,516,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,2,0.33,508,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,3,0.44000000000000006,476,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,4,0.5360992085933685,479,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,5,0.4944820868968964,505,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,6,0.26540799140930177,487,False,validation,0.5
+43,ERM-MLP,PP-random-k8,parity,False,False,7,0.43000000000000005,498,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,0,0.36000000000000004,531,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,1,0.5600000000000002,516,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,2,0.6600000000000001,508,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,3,0.43000000000000005,476,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,4,0.5,479,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,5,0.43000000000000005,505,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,6,0.31000000000000005,487,False,validation,0.5
+43,ERM-MLP,PP-random-k8,eo,False,False,7,0.5300000000000001,498,False,validation,0.5
+43,ERM-MLP,PP-HBAC,parity,False,False,0,0.02448007114231586,345,False,validation,0.5
+43,ERM-MLP,PP-HBAC,parity,False,False,1,0.5,712,False,validation,0.5
+43,ERM-MLP,PP-HBAC,parity,False,False,2,0.39000000000000007,1331,False,validation,0.5
+43,ERM-MLP,PP-HBAC,parity,False,False,3,0.45000000000000007,1612,False,validation,0.5
+43,ERM-MLP,PP-HBAC,eo,False,False,0,0.03548160552978515,345,False,validation,0.5
+43,ERM-MLP,PP-HBAC,eo,False,False,1,0.5,712,False,validation,0.5
+43,ERM-MLP,PP-HBAC,eo,False,False,2,0.23000000000000004,1331,False,validation,0.5
+43,ERM-MLP,PP-HBAC,eo,False,False,3,0.5600000000000002,1612,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,parity,False,True,0,0.049895083755254775,964,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,parity,False,True,1,0.3225826549530029,1002,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,parity,False,True,2,0.30189970970153807,1029,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,parity,False,True,3,0.2859135949611664,1005,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,eo,False,False,0,0.13662917613983155,964,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,eo,False,False,1,0.32000000000000006,1002,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,eo,False,False,2,0.27369041085243223,1029,False,validation,0.5
+43,ERM-MLP,PP-geoproxy,eo,False,False,3,0.36000000000000004,1005,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Female,0.40915482521057145,123,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Joint,0.7465635955333709,63,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Hispanic × Male,0.33,175,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Female,0.6300000000000001,61,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Joint,0.8531414985656738,69,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH Asian × Male,0.7500000000000002,141,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH Black × Female,0.37000000000000005,414,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH Black × Joint,0.36000000000000004,174,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH Black × Male,0.5,285,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH White × Female,0.36000000000000004,385,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH White × Joint,0.6400000000000001,688,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,NH White × Male,0.4600000000000001,589,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Other × Female,0.5,12,True,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Other × Joint,0.6329732942581177,70,False,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Other × Male,0.5,11,True,validation,0.5
+43,ERM-MLP,PP-oracle,parity,False,False,Unknown,0.38000000000000006,740,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Female,0.30000000000000004,123,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Joint,0.5,63,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Hispanic × Male,0.28,175,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Female,0.5,61,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Joint,0.8300000000000002,69,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH Asian × Male,0.6500000000000001,141,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH Black × Female,0.33,414,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH Black × Joint,0.24705244600772858,174,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH Black × Male,0.5,285,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH White × Female,0.18811818778514863,385,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH White × Joint,0.35000000000000003,688,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,NH White × Male,0.34,589,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Other × Female,0.5,12,True,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Other × Joint,0.5,70,False,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Other × Male,0.5,11,True,validation,0.5
+43,ERM-MLP,PP-oracle,eo,False,False,Unknown,0.38000000000000006,740,False,validation,0.5

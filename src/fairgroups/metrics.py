@@ -34,9 +34,9 @@ def group_metrics(y, prediction, group, min_size=1):
             "n_eligible_groups": len(details), "group_accuracy": details}
 
 
-def evaluate(y, probability, sensitive, min_detail=30):
+def evaluate(y, probability, sensitive, min_detail=30, prediction=None):
     """คอลัมน์ fairness หลักใช้ intersection เพศ × White/Non-white"""
-    prediction = (probability >= 0.5).astype(int)
+    prediction = (probability >= 0.5).astype(int) if prediction is None else np.asarray(prediction, dtype=int)
     result = {"accuracy": accuracy_score(y, prediction),
               "precision": precision_score(y, prediction, zero_division=0),
               "recall": recall_score(y, prediction, zero_division=0),

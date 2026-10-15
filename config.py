@@ -22,6 +22,16 @@ class Config:
     learning_rate: float = 0.002
     weight_decay: float = 0.001
     dro_eta: float = 0.05
+    dro_adjustment: float = 0.0
+    dro_eta_grid: tuple = (0.01, 0.1)
+    dro_adjustment_grid: tuple = (0.0, 1.0)
+    min_dro_group: int = 50
+    dro_finetune_epochs: int = 5
+    # งบ 5 epoch ครอบคลุม checkpoint 1–5 อยู่แล้ว ไม่ฝึกงบ 3 ซ้ำ
+    dro_epoch_grid: tuple = (5,)
+    dro_variants: tuple = ('cy', 'cy_bal', 'c', 'c_bal')
+    selection_accuracy_tolerance: float = 0.02
+    dro_learning_rate_grid: tuple = (0.0002, 0.001)
     jtt_upweight: float = 10.0
     jtt_identification_epochs: int = 3
     corruption_rate: float = 0.6

@@ -8,6 +8,19 @@ from .models import predict_mlp
 import torch
 
 
+class GlobalClusters:
+    """จัด k กลุ่มบน representation ทั้งหมดโดยไม่รับ y (สำหรับ c/c_bal)"""
+    def fit(self, x, ids, k, seed):
+        self.model_ = KMeans(n_clusters=k, n_init=10, random_state=seed).fit(x)
+        self.labels_ = self.model_.labels_
+        self.centers_ = self.model_.cluster_centers_.astype(np.float32)
+        self.fit_ids_ = np.asarray(ids).copy()
+        return self
+
+    def predict(self, x):
+        return self.model_.predict(x)
+
+
 class ClassClusters:
     """k ต่อคลาส รวม 2k กลุ่ม; ตอนใช้จริงเลือกศูนย์กลางที่ใกล้สุดข้ามคลาส"""
     def fit(self, x, y, ids, k, seed):

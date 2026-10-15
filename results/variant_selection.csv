@@ -1,0 +1,4 @@
+seed,method,representation,k,dro_variant,validation_selection_score,validation_average_accuracy,accuracy_guard_passed,accuracy,positive_rate,approval_rate_gap_race_eth,approval_rate_gap_sex,eo_gap,worst_group_accuracy
+17,Proposed (Silhouette),scarf,2,c,0.8340874811463047,0.91425,True,0.9145,0.88025,0.1084719720917345,0.0602057971449585,0.3015873015873015,0.8297872340425532
+29,Proposed (Silhouette),scarf,4,c,0.8526148969889065,0.9165,True,0.91075,0.889,0.0934774364808493,0.0836818485749274,0.7261904761904762,0.8627450980392157
+43,Proposed (Silhouette),scarf,2,c,0.8248337028824834,0.912,True,0.91275,0.89025,0.1196688155732524,0.0674832537102653,0.7083333333333334,0.8690909090909091

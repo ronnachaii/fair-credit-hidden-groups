@@ -14,6 +14,7 @@ class ResourceMonitor:
     def __enter__(self):
         self.process = psutil.Process()
         self.peak = self.process.memory_info().rss
+        self.peak_start = self.peak
         self.start = time.perf_counter()
         self.stop = threading.Event()
         self.worker = threading.Thread(target=self._sample, daemon=True)

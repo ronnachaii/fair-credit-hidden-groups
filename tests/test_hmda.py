@@ -87,7 +87,7 @@ def test_jtt_validation_grid_does_not_collapse_on_separable_data():
     cfg=Config(epochs=12,jtt_identification_epochs=3,hidden=16,batch_size=32)
     cp,weight,history=choose_jtt(x[:300],{'y':y[:300]},x[300:],{'y':y[300:]},np.zeros(100),cfg,17)
     p=predict_mlp(cp['average'][0],x[300:]);assert .05<(p>=.5).mean()<.95
-    assert weight==max(history,key=lambda r:r['validation_accuracy'])['upweight']
+    assert weight==max([r for r in history if r['selection']=='average'],key=lambda r:r['validation_accuracy'])['upweight']
 
 
 def test_hmda_recorded_audit_and_jtt():
