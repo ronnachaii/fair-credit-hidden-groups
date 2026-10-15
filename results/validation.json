@@ -19,12 +19,12 @@
   "gradio_interface_built": true,
   "colab_live_test": false,
   "fallback_cli_help_passed": true,
-  "fallback_tests": "......ss...s.....                                                        [100%]\n=============================== warnings summary ===============================\ntests/test_tracking.py::test_sqlite_tracking_has_no_per_run_artifacts\n  /Users/ronnachai/.venvs/rsu-fair/lib/python3.11/site-packages/mlflow/store/tracking/sqlalchemy_store.py:327: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1)\n    sqlalchemy.orm.configure_mappers()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n14 passed, 3 skipped, 1 warning in 6.28s",
+  "fallback_tests": "......ss...s.....                                                        [100%]\n=============================== warnings summary ===============================\ntests/test_tracking.py::test_sqlite_tracking_has_no_per_run_artifacts\n  /Users/ronnachai/.venvs/rsu-fair/lib/python3.11/site-packages/mlflow/store/tracking/sqlalchemy_store.py:327: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1)\n    sqlalchemy.orm.configure_mappers()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n14 passed, 3 skipped, 1 warning in 6.54s",
   "fallback_predictive_metrics_match_main_run": true,
   "fallback_quick_pipeline_completed": true,
-  "fallback_quick_seconds": 55.73103199999605,
+  "fallback_quick_seconds": 57.19981870800257,
   "fallback_data_source": "existing HMDA cache symlink; no network/download/install tested",
-  "fallback_post_pilot_tests": "...........s.....                                                        [100%]\n=============================== warnings summary ===============================\ntests/test_tracking.py::test_sqlite_tracking_has_no_per_run_artifacts\n  /Users/ronnachai/.venvs/rsu-fair/lib/python3.11/site-packages/mlflow/store/tracking/sqlalchemy_store.py:327: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1)\n    sqlalchemy.orm.configure_mappers()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n16 passed, 1 skipped, 1 warning in 7.35s",
+  "fallback_post_pilot_tests": "...........s.....                                                        [100%]\n=============================== warnings summary ===============================\ntests/test_tracking.py::test_sqlite_tracking_has_no_per_run_artifacts\n  /Users/ronnachai/.venvs/rsu-fair/lib/python3.11/site-packages/mlflow/store/tracking/sqlalchemy_store.py:327: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1)\n    sqlalchemy.orm.configure_mappers()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n16 passed, 1 skipped, 1 warning in 7.37s",
   "source_sha256": {
     "config.py": "ecee20ef168ad6dcc95bf71898e46ac1b77ba0c04775d162067a2257141619d9",
     "requirements.txt": "63f9eeba6fd232ebb5d9138157fead9123d142d6dfaface4278ab5ae77aa4c69",
@@ -47,8 +47,8 @@
     "src/fairgroups/demo.py": "30aae43fc7b97693d74274bbfb5060c7685e823ef72ff57ead3abb0d0806833f",
     "src/fairgroups/hmda_reporting.py": "568997799522b3145384e9246e9ad73b466409c6a5dea0895b47fd6fab5bd504"
   },
-  "total_files_including_appledouble": 247,
-  "content_files": 115,
+  "total_files_including_appledouble": 347,
+  "content_files": 215,
   "pilot_new_files": 0,
   "pilot_new_files_within_limit": true
 }
