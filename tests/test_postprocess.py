@@ -14,8 +14,8 @@ from fairgroups.metrics import evaluate
 
 def sample():
     rng=np.random.default_rng(19)
-    groups=np.repeat([0,1,2], [100,100,12])
-    y=(rng.random(len(groups))<np.where(groups==0,.95,.7)).astype(int)
+    groups=np.repeat([0,1,2], [250,250,12])
+    y=(rng.random(len(groups))<np.where(groups==0,.85,.7)).astype(int)
     p=np.clip(.3+.5*y+rng.normal(0,.2,len(y)),.01,.99)
     return p,y,groups,np.arange(1000,1000+len(y))
 
@@ -34,6 +34,35 @@ def test_validation_only_fit_and_frozen_small_unseen_groups(objective):
     model.predict(np.array([.01,.99]),np.array([0,1]))
     assert frozen==model.thresholds_  # test prediction เปลี่ยนค่า fit ไม่ได้
     assert 'test' not in inspect.signature(fit_candidates).parameters
+
+
+def _fit_one(n, n_neg, objective='parity'):
+    """กลุ่ม 0 ขนาด n มี n_neg ใบเป็นคลาส 0; กลุ่ม 1 ใหญ่พอเสมอ"""
+    rng=np.random.default_rng(3)
+    y0=np.r_[np.zeros(n_neg,int),np.ones(n-n_neg,int)]
+    y1=(rng.random(300)<.6).astype(int)
+    y=np.r_[y0,y1];g=np.r_[np.zeros(n,int),np.ones(300,int)]
+    p=np.clip(.3+.5*y+rng.normal(0,.2,len(y)),.01,.99)
+    return ValidationThresholds(objective).fit(p,y,g,np.arange(len(y)))
+
+
+def test_plan_2_6_group_threshold_needs_200_rows_and_30_per_class():
+    assert _fit_one(200,30).eligible_[0] is True            # ขอบล่างพอดี: 200 ใบ, แต่ละคลาส >= 30
+    assert _fit_one(199,60).eligible_[0] is False           # ขาด 1 ใบ
+    m=_fit_one(400,29)                                       # ใหญ่พอแต่คลาสเล็ก 29 < 30
+    assert m.eligible_[0] is False and m.thresholds_[0]==.5
+    assert m.merged_row_share_==pytest.approx(400/700)
+    big=_fit_one(300,100)
+    assert big.eligible_[0] and big.merged_row_share_==0.
+    assert len(big.tables_[0]['threshold'])>1 and len(m.tables_[0]['threshold'])==1  # กลุ่มรวมไม่ถูกค้นเกณฑ์
+
+
+def test_config_and_frozen_carry_plan_2_6_values():
+    from config import V1_FROZEN, make_v1_config
+    assert (Config().min_threshold_group,Config().min_threshold_class)==(200,30)
+    assert (V1_FROZEN['min_threshold_group'],V1_FROZEN['min_threshold_class'])==(200,30)
+    cfg=make_v1_config(quick=True)
+    assert (cfg.min_threshold_group,cfg.min_threshold_class)==(200,30) and cfg.min_dro_group==50
 
 
 def test_parity_matches_bruteforce_grid_optimum_and_eo_improves_its_target():

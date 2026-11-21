@@ -20,6 +20,7 @@ from .tracking import setup_tracking, log_row
 from .explanations import describe_groups, export_explanations
 from .dro import make_dro_groups, balanced_cluster_weights, validation_groups
 from .postprocess import XRandomGroups, fit_candidates, evaluate_candidates
+from .access_guard import require_access
 
 
 def save_json(path,value):
@@ -117,21 +118,36 @@ def choose_dro(xt, y, xv, yv, vg, groups, erm, config, seed, method,
     return chosen,history[best_indices['inferred_worst_group']],history
 
 
-def run_experiment(config,root='.'):
-    root=Path(root).resolve(); output=root/'results';output.mkdir(exist_ok=True)
-    start=time.perf_counter(); set_seed(config.seeds[0],config.threads)
+def run_experiment(config,root='.',output_dir=None):
+    """output_dir ใช้เมื่อไม่ต้องการเขียนทับ results/ เดิม (เช่นรันทดสอบ device); ค่าเริ่มต้นคือ root/results"""
+    root=Path(root).resolve(); output=Path(output_dir).resolve() if output_dir else root/'results'
+    # ด่านป้องกัน R/C ก่อนสร้างโฟลเดอร์หรือแตะข้อมูลใด ๆ (ตัวโหลดตรวจซ้ำและบันทึก open_log เมื่อปลดล็อก)
+    access=dict(unlock_R=config.unlock_R,unlock_C=config.unlock_C,plan_file=config.plan_file)
+    require_access(config.state,config.year,log=False,**access)
+    if config.mode not in ('confirm','context_dro'):
+        raise ValueError("mode ต้องเป็น 'confirm' หรือ 'context_dro'")
+    if config.mode=='context_dro':
+        if (config.state.upper(),int(config.year))!=('GA',2023):
+            raise ValueError('context_dro (group-DRO) รันได้เฉพาะ GA 2566 เท่านั้น ไม่เข้าตารางยืนยัน')
+        if not output_dir or output==root/'results':
+            raise ValueError('context_dro ต้องระบุ output_dir ใหม่ ห้ามเขียนทับ results/ เดิม')
+    if config.mode=='confirm' and config.split_seed is None:
+        raise ValueError('mode confirm ต้องตั้ง split_seed (ชุดแบ่งเดียวต่อรัฐ-ปี แผน §2.1) เพื่อให้ bootstrap แบบ paired ได้')
+    output.mkdir(parents=True,exist_ok=True)
+    start=time.perf_counter(); set_seed(config.seeds[0],config.threads,config.device)
     before={str(p.relative_to(root)) for p in root.rglob('*') if p.is_file()}
     prior_env=json.loads((output/'environment.json').read_text()) if (output/'environment.json').exists() else {}
-    env=environment(config); setup_tracking(root)
+    env=environment(config); setup_tracking(output if output_dir else root)
     rows=[];clusters=[];resources=[];audits=[];explanations=[];feature_tests=[];jtt_history=[];dro_history=[];demo_bundle=None
     pp_rows=[];pp_thresholds=[];pp_audits=[];pp_demo=None
+    confirm_seeds=[];confirm_shared=None
     with ResourceMonitor() as overall:
-        frame,y,s,stages=load_hmda(root/'data',config.state)
+        frame,y,s,stages=load_hmda(root/'data',config.state,config.year,access)
         write_profile(output,stages,y,s)
         env.update(eligible_source_rows=len(y),source_rows=int(stages.iloc[0]['n']))
         for seed in config.seeds:
             print(f'seed={seed}: HMDA split / audit / representation',flush=True)
-            splits=split_hmda(frame,y,s,seed,config.max_rows)
+            splits=split_hmda(frame,y,s,seed if config.split_seed is None else config.split_seed,config.max_rows)
             train,val,test=(splits[n] for n in ['train','val','test'])
             audit={'seed':seed,**{f'{n}_ids':p['ids'].tolist() for n,p in splits.items()},'fits':[]}
             def add_fit(stage,ids):
@@ -178,7 +194,7 @@ def run_experiment(config,root='.'):
                         rec={'seed':seed,'representation':rep_name,'k':k,'group_definition':definition,
                              'silhouette':scores['silhouette'],'davies_bouldin':scores['davies_bouldin'],
                              'n_clusters':scores['n_clusters'],
-                             **{key:value for key,value in alignment.items() if key.startswith(('ari_','nmi_','alignment_'))},
+                             **{key:value for key,value in alignment.items() if key.startswith(('ari_','nmi_','ami_','alignment_'))},
                              'discovery_train_seconds':seconds,
                              'assignment':'nearest center without y', 'cluster_fit_uses_y':definition=='cy'}
                         clusters.append(rec);discoveries[(definition,rep_name,k)]=(km,labels,rec,seconds)
@@ -193,7 +209,7 @@ def run_experiment(config,root='.'):
             audit['error_crossfits']=[oof];add_fit('HBAC_OOF',train['ids']);add_fit('HBAC',hbac.fit_ids_)
             hrec={'seed':seed,'representation':'HBAC','k':hbac.n_clusters_,'silhouette':hscore['silhouette'],
                   'davies_bouldin':hscore['davies_bouldin'],'n_clusters':hbac.n_clusters_,
-                  **{a:b for a,b in alignment.items() if a.startswith(('ari_','nmi_','alignment_'))},'discovery_train_seconds':hr.seconds}
+                  **{a:b for a,b in alignment.items() if a.startswith(('ari_','nmi_','ami_','alignment_'))},'discovery_train_seconds':hr.seconds}
             hlabels=labels
             clusters.append({**hrec,'group_definition':'shared'})
             resources.append({'seed':seed,'representation':'HBAC','discovery_train_seconds':hr.seconds,
@@ -208,17 +224,18 @@ def run_experiment(config,root='.'):
             # ใช้ Silhouette train เลือก representation/k แยก c และ cy ก่อนเลือก variant ด้วย validation
             main_pairs={d:max([(r,selected[(d,r)]) for r in ['raw','scarf']],
                              key=lambda pair:discoveries[(d,*pair)][2]['silhouette']) for d in ['cy','c']}
-            for (definition,rep_name),k in selected.items():
-                _,labels,_,_=discoveries[(definition,rep_name,k)]
-                method=f'GDRO-{rep_name}-k{k}' if rep_name in ['raw','scarf'] else rep_name
-                cards,tests,fit_ids=describe_groups(method,k,seed,train,val,test,labels,predict_mlp(erm,xx),config)
-                for row in cards+tests: row['group_definition']=definition
-                explanations.extend(cards);feature_tests.extend(tests);add_fit(f'explanation_{definition}_{rep_name}',fit_ids)
-            cards,tests,fit_ids=describe_groups('HBAC',hbac.n_clusters_,seed,train,val,test,hlabels,predict_mlp(erm,xx),config)
-            for definition in ['cy','c']:
-                explanations.extend([{**r,'group_definition':definition} for r in cards])
-                feature_tests.extend([{**r,'group_definition':definition} for r in tests])
-            add_fit('explanation_HBAC',fit_ids)
+            if config.mode=='context_dro':  # RQ2 (คำอธิบายกลุ่ม) อยู่นอกขอบเขตบทความแรก
+                for (definition,rep_name),k in selected.items():
+                    _,labels,_,_=discoveries[(definition,rep_name,k)]
+                    method=f'GDRO-{rep_name}-k{k}' if rep_name in ['raw','scarf'] else rep_name
+                    cards,tests,fit_ids=describe_groups(method,k,seed,train,val,test,labels,predict_mlp(erm,xx),config)
+                    for row in cards+tests: row['group_definition']=definition
+                    explanations.extend(cards);feature_tests.extend(tests);add_fit(f'explanation_{definition}_{rep_name}',fit_ids)
+                cards,tests,fit_ids=describe_groups('HBAC',hbac.n_clusters_,seed,train,val,test,hlabels,predict_mlp(erm,xx),config)
+                for definition in ['cy','c']:
+                    explanations.extend([{**r,'group_definition':definition} for r in cards])
+                    feature_tests.extend([{**r,'group_definition':definition} for r in tests])
+                add_fit('explanation_HBAC',fit_ids)
             def record(method,rep,k,checkpoints,seconds,peak,alignment=None,discovery_seconds=0,extra=None):
                 for selection,(model,epoch,score) in checkpoints.items():
                     predict=(lambda a,model=model:predict_mlp(model,a)) if method!='ERM-LGBM' else (lambda a,epoch=epoch:model.predict_proba(a,num_iteration=epoch)[:,1])
@@ -249,6 +266,24 @@ def run_experiment(config,root='.'):
                 choices={t:validation_scores(val['y'],lgb.predict_proba(xv,num_iteration=t)[:,1],vg) for t in sorted(set([10,25,50,config.trees]))}
                 lc={sel:(lgb,t,choices[t][sel]) for sel in ['average','worst_group'] for t in [max(choices,key=lambda t:choices[t][sel])]}
             record('ERM-LGBM','none',0,lc,lr.seconds,lr.peak_mb)
+            if config.mode=='confirm':
+                lgb_iter=lc['average'][1]
+                lab_val,lab_test={},{}
+                for rep_name in ['raw','scarf','GEORGE']:
+                    for k in config.ks:
+                        lab=discoveries[('c',rep_name,k)][1]
+                        lab_val[f'{rep_name}|{k}']=lab['val'];lab_test[f'{rep_name}|{k}']=lab['test']
+                lab_val['HBAC'],lab_test['HBAC']=hlabels['val'],hlabels['test']
+                lab_val['geoproxy'],lab_test['geoproxy']=geo_labels['val'],geo_labels['test']
+                confirm_seeds.append({'seed':seed,'labels_val':lab_val,'labels_test':lab_test,
+                    'p_val':lgb.predict_proba(xv,num_iteration=lgb_iter)[:,1],'p_test':lgb.predict_proba(xx,num_iteration=lgb_iter)[:,1]})
+                if confirm_shared is None:
+                    confirm_shared={'train_inter':train['s'].intersection.to_numpy(),'val_inter':val['s'].intersection.to_numpy(),
+                        'test_inter':test['s'].intersection.to_numpy(),'test_race':test['s'].race_eth.to_numpy(),
+                        'test_lei':test['frame'].lei.astype(str).to_numpy(),'y_val':val['y'],'y_test':test['y'],
+                        'val_ids':val['ids'],'test_ids':test['ids'],'xt':xt,'xv':xv,'xx':xx}
+                else:  # ชุดแบ่งคงที่: ชุดทดสอบ/ตรวจสอบต้องเป็นชุดเดียวกันทุก seed
+                    assert (confirm_shared['test_ids']==test['ids']).all() and (confirm_shared['val_ids']==val['ids']).all()
             # PP ใช้ c เท่านั้น; เลือก GEORGE k ด้วย silhouette train เดิม
             pp_methods=[]
             for (definition,rep,k),(km,labels,rec,seconds) in discoveries.items():
@@ -296,98 +331,112 @@ def run_experiment(config,root='.'):
             pd.DataFrame(pp_rows).to_csv(output/'postprocess_results.csv',index=False)
             pd.DataFrame(pp_thresholds).to_csv(output/'postprocess_thresholds.csv',index=False)
             save_json(output/'postprocess_audit.json',pp_audits)
-            with ResourceMonitor() as jr:
-                jc,jw,jhistory=choose_jtt(xt,train,xv,val,vg,config,seed,erm_checkpoints['average'][2])
-            jtt_history.extend(jhistory);record('JTT','none',0,jc,jr.seconds,jr.peak_mb,extra={'jtt_upweight':jw})
-            methods=[]
-            for variant in config.dro_variants:
-                definition='cy' if variant.startswith('cy') else 'c'
-                for k in config.ks:
-                    # cy คงกลุ่มสุ่มต่อคลาสเดิม; c สุ่มโดยไม่รับ y
-                    random=np.random.default_rng(seed+k).integers(k,size=len(xt))
-                    random_val=np.random.default_rng(seed+k+10000).integers(k,size=len(xv))
-                    if definition=='cy':
-                        random=train['y']*k+random
-                        random_val=val['y']*k+random_val
-                    methods.append((variant,f'GDRO-random-k{k}','random',k,random,random_val,{},0))
-                for (d,rep,k),(_,labels,rec,seconds) in discoveries.items():
-                    if d!=definition or (rep=='GEORGE' and k!=selected[(d,rep)]): continue
-                    name=f'GDRO-{rep}-k{k}' if rep in ['raw','scarf'] else rep
-                    methods.append((variant,name,rep,k,labels['train'],labels['val'],rec,seconds))
-                methods.append((variant,'HBAC','HBAC',hbac.n_clusters_,hlabels['train'],hlabels['val'],hrec,hr.seconds))
-                methods.append((variant,'GDRO-geoproxy','geoproxy',4,geo_labels['train'],geo_labels['val'],geo_score,geo_r.seconds))
-                _,oracle=np.unique(train['s'].intersection.to_numpy(),return_inverse=True)
-                methods.append((variant,'GDRO-oracle','oracle',len(np.unique(oracle)),oracle,vg,{},0))
-            audit['dro_merges']=[];variant_candidates={};demo_candidates={}
-            for variant,method,rep,k,base_groups,val_clusters,alignment,seconds in methods:
-                definition='cy' if variant.startswith('cy') else 'c'
-                print(f'  {seed}: {method} / {variant}',flush=True)
-                with ResourceMonitor() as mr:
-                    merge_space=reps[rep]['train'] if rep in reps else xt
-                    groups,merge=make_dro_groups(merge_space,base_groups,config.min_dro_group,definition,
-                                                 train['y'] if definition=='cy' else None)
-                    weights=balanced_cluster_weights(base_groups if definition=='cy' else groups,train['y']) if variant.endswith('_bal') else None
-                    inferred_val=validation_groups(val_clusters,val['y'],definition)
-                    audit['dro_merges'].append({'method':method,'dro_variant':variant,**merge,
-                        'class_weight_split':'train' if weights is not None else 'none',
-                        'validation_group_counts':{str(g):int((inferred_val==g).sum()) for g in np.unique(inferred_val)}})
-                    add_fit(f'dro_merge_{method}_{variant}',train['ids'])
-                    checkpoints,chosen,history=choose_dro(xt,train['y'],xv,val['y'],vg,groups,erm,config,seed,method,
-                        inferred_val_groups=inferred_val,inferred_min_size=config.min_fair_group if rep=='oracle' else 1,
-                        variant=variant,sample_weights=weights)
-                dro_history.extend(history)
-                metrics={a:b for a,b in alignment.items() if a.startswith(('ari_','nmi_','silhouette','davies_bouldin','n_clusters'))}
-                is_proposed=rep in ['raw','scarf'] and (rep,k)==main_pairs[definition]
-                record(method,rep,k,checkpoints,mr.seconds+er.seconds,mr.peak_mb,metrics,seconds,
-                    extra={'n_dro_groups':len(np.unique(groups)),'n_dro_groups_before_merge':merge['n_groups_before'],
-                           'dro_warm_start':True,'min_dro_group':config.min_dro_group,'dro_variant':variant,
-                           'group_definition':definition,'class_balanced':weights is not None,
-                           'class_weight_min':float(weights.min()) if weights is not None else 1.,
-                           'class_weight_max':float(weights.max()) if weights is not None else 1.,
-                           'selected_without_demographics':selected.get((definition,rep))==k or rep in ['HBAC','geoproxy'],
-                           'proposed_selected':is_proposed})
-                cp=checkpoints['inferred_worst_group'][0]
-                variant_candidates[(method,variant)]=cp.selection_metadata_
-                if seed==config.seeds[0] and is_proposed:
-                    demo_candidates[variant]={'guard':guard,'processor':processor,'erm':erm,'fair':cp,
-                        'selection':'inferred_worst_group','dro_variant':variant,'group_definition':definition,
-                        'representation':rep,'scarf':scarf,'scarf_scaler':scarf_scaler,'clusterer':discoveries[(definition,rep,k)][0],
-                        'defaults':{c:float(train['x'][c].median()) if pd.api.types.is_numeric_dtype(train['x'][c]) else train['x'][c].mode().iloc[0] for c in train['x']},
-                        'method':method,'seed':seed}
-            # การเปรียบเทียบนี้อ่านเฉพาะ validation metadata ไม่อ่านตัวชี้วัด test ที่ record แล้ว
-            def variant_rank(key):
-                meta=variant_candidates[key]
-                return selection_rank('inferred_worst_group',meta,meta['accuracy_floor'])
-            best_variants={method:max([key for key in variant_candidates if key[0]==method],key=variant_rank)[1]
-                           for method,_ in variant_candidates}
-            proposed_keys=[(f'GDRO-{main_pairs["cy" if v.startswith("cy") else "c"][0]}-k{main_pairs["cy" if v.startswith("cy") else "c"][1]}',v)
-                           for v in config.dro_variants]
-            best_proposed=max(proposed_keys,key=variant_rank)
-            for row in rows:
-                if row['seed']!=seed or row['dro_variant']=='none': continue
-                row['variant_selected_without_demographics']=row['representation']!='oracle' and row['dro_variant']==best_variants[row['method']]
-                row['proposed_variant_selected']=(row['method'],row['dro_variant'])==best_proposed
-            if seed==config.seeds[0]: demo_bundle=demo_candidates[best_proposed[1]]
+            if config.mode=='context_dro':  # group-DRO/JTT: บริบทบน GA เท่านั้น ไม่เข้าตารางยืนยัน/พหุคูณ
+                with ResourceMonitor() as jr:
+                    jc,jw,jhistory=choose_jtt(xt,train,xv,val,vg,config,seed,erm_checkpoints['average'][2])
+                jtt_history.extend(jhistory);record('JTT','none',0,jc,jr.seconds,jr.peak_mb,extra={'jtt_upweight':jw})
+                methods=[]
+                for variant in config.dro_variants:
+                    definition='cy' if variant.startswith('cy') else 'c'
+                    for k in config.ks:
+                        # cy คงกลุ่มสุ่มต่อคลาสเดิม; c สุ่มโดยไม่รับ y
+                        random=np.random.default_rng(seed+k).integers(k,size=len(xt))
+                        random_val=np.random.default_rng(seed+k+10000).integers(k,size=len(xv))
+                        if definition=='cy':
+                            random=train['y']*k+random
+                            random_val=val['y']*k+random_val
+                        methods.append((variant,f'GDRO-random-k{k}','random',k,random,random_val,{},0))
+                    for (d,rep,k),(_,labels,rec,seconds) in discoveries.items():
+                        if d!=definition or (rep=='GEORGE' and k!=selected[(d,rep)]): continue
+                        name=f'GDRO-{rep}-k{k}' if rep in ['raw','scarf'] else rep
+                        methods.append((variant,name,rep,k,labels['train'],labels['val'],rec,seconds))
+                    methods.append((variant,'HBAC','HBAC',hbac.n_clusters_,hlabels['train'],hlabels['val'],hrec,hr.seconds))
+                    methods.append((variant,'GDRO-geoproxy','geoproxy',4,geo_labels['train'],geo_labels['val'],geo_score,geo_r.seconds))
+                    _,oracle=np.unique(train['s'].intersection.to_numpy(),return_inverse=True)
+                    methods.append((variant,'GDRO-oracle','oracle',len(np.unique(oracle)),oracle,vg,{},0))
+                audit['dro_merges']=[];variant_candidates={};demo_candidates={}
+                for variant,method,rep,k,base_groups,val_clusters,alignment,seconds in methods:
+                    definition='cy' if variant.startswith('cy') else 'c'
+                    print(f'  {seed}: {method} / {variant}',flush=True)
+                    with ResourceMonitor() as mr:
+                        merge_space=reps[rep]['train'] if rep in reps else xt
+                        groups,merge=make_dro_groups(merge_space,base_groups,config.min_dro_group,definition,
+                                                     train['y'] if definition=='cy' else None)
+                        weights=balanced_cluster_weights(base_groups if definition=='cy' else groups,train['y']) if variant.endswith('_bal') else None
+                        inferred_val=validation_groups(val_clusters,val['y'],definition)
+                        audit['dro_merges'].append({'method':method,'dro_variant':variant,**merge,
+                            'class_weight_split':'train' if weights is not None else 'none',
+                            'validation_group_counts':{str(g):int((inferred_val==g).sum()) for g in np.unique(inferred_val)}})
+                        add_fit(f'dro_merge_{method}_{variant}',train['ids'])
+                        checkpoints,chosen,history=choose_dro(xt,train['y'],xv,val['y'],vg,groups,erm,config,seed,method,
+                            inferred_val_groups=inferred_val,inferred_min_size=config.min_fair_group if rep=='oracle' else 1,
+                            variant=variant,sample_weights=weights)
+                    dro_history.extend(history)
+                    metrics={a:b for a,b in alignment.items() if a.startswith(('ari_','nmi_','ami_','silhouette','davies_bouldin','n_clusters'))}
+                    is_proposed=rep in ['raw','scarf'] and (rep,k)==main_pairs[definition]
+                    record(method,rep,k,checkpoints,mr.seconds+er.seconds,mr.peak_mb,metrics,seconds,
+                        extra={'n_dro_groups':len(np.unique(groups)),'n_dro_groups_before_merge':merge['n_groups_before'],
+                               'dro_warm_start':True,'min_dro_group':config.min_dro_group,'dro_variant':variant,
+                               'group_definition':definition,'class_balanced':weights is not None,
+                               'class_weight_min':float(weights.min()) if weights is not None else 1.,
+                               'class_weight_max':float(weights.max()) if weights is not None else 1.,
+                               'selected_without_demographics':selected.get((definition,rep))==k or rep in ['HBAC','geoproxy'],
+                               'proposed_selected':is_proposed})
+                    cp=checkpoints['inferred_worst_group'][0]
+                    variant_candidates[(method,variant)]=cp.selection_metadata_
+                    if seed==config.seeds[0] and is_proposed:
+                        demo_candidates[variant]={'guard':guard,'processor':processor,'erm':erm,'fair':cp,
+                            'selection':'inferred_worst_group','dro_variant':variant,'group_definition':definition,
+                            'representation':rep,'scarf':scarf,'scarf_scaler':scarf_scaler,'clusterer':discoveries[(definition,rep,k)][0],
+                            'defaults':{c:float(train['x'][c].median()) if pd.api.types.is_numeric_dtype(train['x'][c]) else train['x'][c].mode().iloc[0] for c in train['x']},
+                            'method':method,'seed':seed}
+                # การเปรียบเทียบนี้อ่านเฉพาะ validation metadata ไม่อ่านตัวชี้วัด test ที่ record แล้ว
+                def variant_rank(key):
+                    meta=variant_candidates[key]
+                    return selection_rank('inferred_worst_group',meta,meta['accuracy_floor'])
+                best_variants={method:max([key for key in variant_candidates if key[0]==method],key=variant_rank)[1]
+                               for method,_ in variant_candidates}
+                proposed_keys=[(f'GDRO-{main_pairs["cy" if v.startswith("cy") else "c"][0]}-k{main_pairs["cy" if v.startswith("cy") else "c"][1]}',v)
+                               for v in config.dro_variants]
+                best_proposed=max(proposed_keys,key=variant_rank)
+                for row in rows:
+                    if row['seed']!=seed or row['dro_variant']=='none': continue
+                    row['variant_selected_without_demographics']=row['representation']!='oracle' and row['dro_variant']==best_variants[row['method']]
+                    row['proposed_variant_selected']=(row['method'],row['dro_variant'])==best_proposed
+                if seed==config.seeds[0]: demo_bundle=demo_candidates[best_proposed[1]]
             for row in rows:
                 if row['seed']==seed: row['mlflow_run_id']=log_row(row,env['libraries'],config)
             for row in pp_rows:
                 if row['seed']==seed: row['mlflow_run_id']=log_row(row,env['libraries'],config,kind='postprocess')
             pd.DataFrame(pp_rows).to_csv(output/'postprocess_results.csv',index=False)
             audits.append(audit)
-            pd.DataFrame(rows).to_csv(output/'hmda_pilot_results.csv',index=False)
+            result_frame=pd.DataFrame(rows)
+            if config.mode=='context_dro': result_frame['analysis_role']='context_dro_GA_not_confirmatory'
+            result_frame.to_csv(output/'hmda_pilot_results.csv',index=False)
             pd.DataFrame(clusters).to_csv(output/'clustering_results.csv',index=False)
-            pd.DataFrame(dro_history).to_csv(output/'dro_grid.csv',index=False)
+            if config.mode=='context_dro': pd.DataFrame(dro_history).to_csv(output/'dro_grid.csv',index=False)
             save_json(output/'leakage_audit.json',{'scope':'train-only per seed','seeds':audits})
-        export_explanations(output,explanations,feature_tests)
         pd.DataFrame(resources).to_csv(output/'representation_resources.csv',index=False)
-        pd.DataFrame(jtt_history).to_csv(output/'jtt_validation_grid.csv',index=False)
-        from .demo import save_bundle
-        demo_bundle['postprocess']=pp_demo
-        save_bundle(output,demo_bundle)
-        from .hmda_reporting import generate_reports
-        generate_reports(output)
+        if config.mode=='context_dro':
+            export_explanations(output,explanations,feature_tests)
+            pd.DataFrame(jtt_history).to_csv(output/'jtt_validation_grid.csv',index=False)
+            from .demo import save_bundle
+            demo_bundle['postprocess']=pp_demo
+            # bundle ต้องเปิดได้บนเครื่องที่ไม่มี GPU จึงย้ายโมเดลกลับ CPU ก่อน pickle
+            for key in ('erm','fair','scarf'):
+                if key in demo_bundle: demo_bundle[key].cpu()
+            save_bundle(output,demo_bundle)
+            from .hmda_reporting import generate_reports
+            generate_reports(output)
+            (output/'CONTEXT_ONLY_NOT_CONFIRMATORY.txt').write_text(
+                'ผลชุดนี้เป็นรันบริบท group-DRO/JTT บนจอร์เจีย 2566 (mode context_dro) ไม่เข้า H3a/ตารางยืนยัน/การแก้พหุคูณ '
+                '(แผนวิเคราะห์ §6.1, §8 ข้อ 6)\n',encoding='utf-8')
+        else:
+            from .confirmatory import analyze
+            confirm_results=analyze(confirm_shared,confirm_seeds,config,output,state=config.state)
     env.update(wall_seconds=time.perf_counter()-start,peak_process_rss_mb=overall.peak_mb,decision_rows=len(rows),
                clustering_rows=len(clusters),completed=True,colab_runtime_verified=False,hbac_backend='unsupervised-bias-detection 0.2.6')
+    env.update(mode=config.mode,year=config.year,split_seed=config.split_seed)
     env.update(postprocess_rows=len(pp_rows),postprocess_fit_seconds=sum(r['threshold_fit_seconds'] for r in pp_rows),
                postprocess_accuracy_tolerance=config.selection_accuracy_tolerance,
                postprocess_search='parity interval bisection 20 steps; EO coordinate descent 10 sweeps, two starts')

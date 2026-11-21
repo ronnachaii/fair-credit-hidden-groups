@@ -53,13 +53,17 @@ def reference_groups(s):
     return {c: s[c].to_numpy().astype(str) for c in ['race_eth','sex','age','intersection']}
 
 
-def load_hmda(root, state='GA'):
-    path = Path(root) / 'hmda' / f'hmda_2023_{state}.csv'
+def load_hmda(root, state='GA', year=2023, access=None):
+    """ด่านป้องกัน R/C อยู่ที่นี่: ก่อนอ่านไฟล์หรือดาวน์โหลดใด ๆ ต้องผ่าน access_guard.require_access
+    access = dict(unlock_R=..., unlock_C=..., plan_file=...) หรือ None (ไม่มีการปลดล็อก -> เปิดได้เฉพาะ GA/ID/NM ปี 2566)"""
+    from .access_guard import require_access
+    require_access(state, year, **(access or {}))
+    path = Path(root) / 'hmda' / f'hmda_{year}_{state}.csv'
     if not path.exists():
         # urllib ติดตาม redirect ตามมาตรฐาน และเก็บแคชใช้รอบถัดไป
         import urllib.request
         path.parent.mkdir(parents=True, exist_ok=True)
-        url = f'https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states={state}&years=2023&actions_taken=1,2,3'
+        url = f'https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states={state}&years={year}&actions_taken=1,2,3'
         temp = path.with_suffix('.part')
         urllib.request.urlretrieve(url, temp)
         temp.replace(path)

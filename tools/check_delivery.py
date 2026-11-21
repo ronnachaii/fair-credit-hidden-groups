@@ -80,8 +80,45 @@ def check_postprocess(results, env):
         'round5_snapshot_and_predictive_metrics_preserved':snapshot.exists()}
 
 
+def check_confirm(results, env):
+    """โหมด confirm (ค่าเริ่มต้นของ run_pilot.py): ไม่มี DRO/JTT/คำอธิบาย/demo; ตรวจเกณฑ์ §2.6 และไฟล์ confirm/"""
+    cfg=env['config']
+    assert cfg['mode']=='confirm' and not env.get('unlock_R') and not env.get('unlock_C')
+    pp=pd.read_csv(results/'postprocess_results.csv');th=pd.read_csv(results/'postprocess_thresholds.csv')
+    assert not pp.duplicated(['base','seed','method','objective']).any() and set(pp.base)=={'ERM-LGBM','ERM-MLP'}
+    assert (len(pp)//(2*len(env['seeds'])))*(2*len(env['seeds']))==len(pp)==env['postprocess_rows']
+    candidates=pp[~pp.objective.eq('baseline')]
+    assert candidates.accuracy_guard_passed.all() and th.fit_split.eq('validation').all()
+    # แผน §2.6: ได้เกณฑ์ของตนเองต่อเมื่อ val >= min_threshold_group ใบ (และแต่ละคลาส >= min_threshold_class); ที่เหลือตรึง 0.5
+    assert th[th.frozen_small_group].threshold.eq(.5).all() and th.unseen_group_threshold.eq(.5).all()
+    assert th[~th.frozen_small_group].n_validation.ge(cfg['min_threshold_group']).all()
+    assert th[th.n_validation<cfg['min_threshold_group']].frozen_small_group.all()
+    assert th.merged_row_share.between(0,1).all()
+    for (base,seed),part in pp.groupby(['base','seed']):
+        assert part.auroc.nunique()==1
+        for flag in ['proposed_selected','selected_without_demographics']:
+            assert part[flag].sum()==1
+    confirm=results/'confirm'
+    for name in ['confirm_alignment_seed.csv','confirm_h3b_seed.csv','confirm_ceiling_seed.csv','confirm_h4a_points.csv',
+                 'confirm_bootstrap_summary_row.csv','confirm_bootstrap_summary_lei.csv','confirm_hypotheses.csv',
+                 'confirm_timing.csv','confirm_meta.json']:
+        assert (confirm/name).exists(),name
+    hyp=pd.read_csv(confirm/'confirm_hypotheses.csv')
+    assert {'H1a','H1b','H3b','H4a'}<=set(hyp.hypothesis) and hyp[hyp.hypothesis.isin(['H1a','H1b','H3b','H4a'])].p_state.between(0,1).all()
+    assert not pd.read_csv(results/'hmda_pilot_results.csv').method.str.startswith(('GDRO','JTT')).any()
+    meta=json.loads((confirm/'confirm_meta.json').read_text(encoding='utf-8'))
+    assert meta['k_main']==cfg['k_main'] and meta['network_seeds']==list(env['seeds'])
+    out={'mode':'confirm','postprocess_rows':len(pp),'threshold_rows':len(th),'frozen_small_group_rows':int(th.frozen_small_group.sum()),
+         'mean_merged_row_share':float(th.merged_row_share.mean()),'confirm_timing':pd.read_csv(confirm/'confirm_timing.csv').wall_seconds.round(1).tolist(),
+         'wall_seconds':env['wall_seconds']}
+    print(json.dumps(out,indent=2,ensure_ascii=False));return out
+
+
 def main():
-    results=ROOT/'results';env=json.loads((results/'environment.json').read_text())
+    results=Path(sys.argv[sys.argv.index('--results')+1]).resolve() if '--results' in sys.argv else ROOT/'results'
+    env=json.loads((results/'environment.json').read_text())
+    if env.get('config',{}).get('mode')=='confirm':
+        setup_tracking(ROOT);return check_confirm(results,env)
     df=pd.read_csv(results/'hmda_pilot_results.csv');clusters=pd.read_csv(results/'clustering_results.csv')
     setup_tracking(ROOT)
     pp_validation=check_postprocess(results,env)

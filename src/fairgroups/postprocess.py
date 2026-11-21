@@ -29,10 +29,15 @@ def _span(values):
 
 class ValidationThresholds:
     """Parity ใช้ช่วงอัตราอนุมัติ; EO ใช้ค้นทีละกลุ่ม จึงไม่รับรอง optimum EO"""
-    def __init__(self, objective='parity', min_group=50, tolerance=.02):
+    def __init__(self, objective='parity', min_group=200, tolerance=.02, min_class=30):
         if objective not in ('parity', 'eo'):
             raise ValueError('objective ต้องเป็น parity หรือ eo')
-        self.objective, self.min_group, self.tolerance = objective, min_group, tolerance
+        # แผน §2.6: กลุ่มได้เกณฑ์ของตนเองต่อเมื่อ validation >= min_group ใบ และแต่ละคลาส >= min_class ใบ
+        # มิฉะนั้นใช้เกณฑ์รวมเริ่มต้น 0.5 (เกณฑ์เดียวกับ ERM ที่ใช้กับทุกกลุ่ม)
+        self.objective, self.min_group, self.tolerance, self.min_class = objective, min_group, tolerance, min_class
+
+    def _eligible(self, yg):
+        return len(yg) >= self.min_group and min((yg == 1).sum(), (yg == 0).sum()) >= self.min_class
 
     def _tables(self, p, y, groups):
         tables = []
@@ -41,7 +46,7 @@ class ValidationThresholds:
             pg, yg = p[mask], y[mask]
             # ใส่ 0.5 ไว้ก่อนเพื่อคงเกณฑ์เดิมเมื่อผลเสมอกัน
             thresholds = np.array([.5])
-            if len(pg) >= self.min_group:
+            if self._eligible(yg):
                 extra = np.unique(np.r_[np.arange(.05, .951, .01),
                     np.quantile(pg, np.linspace(0, 1, 101)), np.nextafter(pg.max(), np.inf)])
                 thresholds = np.r_[.5, extra[extra != .5]]
@@ -139,6 +144,8 @@ class ValidationThresholds:
             indices = self._eo(indices)
         self.thresholds_ = {g: float(t['threshold'][i]) for g, t, i in zip(self.groups_, self.tables_, indices)}
         self.counts_ = {g: int(t['n']) for g, t in zip(self.groups_, self.tables_)}
+        self.eligible_ = {g: bool(self._eligible(y[groups == g])) for g in self.groups_}
+        self.merged_row_share_ = float(sum(n for g, n in self.counts_.items() if not self.eligible_[g]) / len(p))
         self.validation_ = self._stats(indices)
         assert self.validation_['accuracy'] >= self.accuracy_floor_ - 1e-12
         return self
@@ -160,8 +167,8 @@ def fit_candidates(base, probabilities, val, methods, config, seed):
     for method, rep, k, labels in methods:
         for objective in ['parity', 'eo']:
             with ResourceMonitor() as monitor:
-                model = ValidationThresholds(objective, config.min_dro_group,
-                    config.selection_accuracy_tolerance).fit(probabilities, val['y'], labels['val'], val['ids'])
+                model = ValidationThresholds(objective, config.min_threshold_group,
+                    config.selection_accuracy_tolerance, config.min_threshold_class).fit(probabilities, val['y'], labels['val'], val['ids'])
             s = model.validation_
             row = {'seed': seed, 'base': base, 'method': method, 'representation': rep, 'k': k,
                 'objective': objective, 'fit_split': 'validation', 'group_definition': 'c',
@@ -173,7 +180,8 @@ def fit_candidates(base, probabilities, val, methods, config, seed):
                 'threshold_fit_seconds': monitor.seconds, 'threshold_peak_process_rss_mb': monitor.peak_mb,
                 'threshold_peak_rss_increase_mb': (monitor.peak - monitor.peak_start) / 1024**2,
                 'n_validation_groups': len(model.groups_),
-                'n_frozen_small_groups': sum(n < config.min_dro_group for n in model.counts_.values()),
+                'n_frozen_small_groups': sum(not e for e in model.eligible_.values()),
+                'threshold_merged_row_share': model.merged_row_share_,
                 'selected_without_demographics': False, 'proposed_selected': False}
             candidates.append((row, model, labels))
     for flag, eligible in [
@@ -195,6 +203,7 @@ def evaluate_candidates(candidates, probability, test, min_detail):
         for g, threshold in model.thresholds_.items():
             thresholds.append({**{k: metadata[k] for k in ['seed', 'base', 'method', 'objective',
                 'proposed_selected', 'selected_without_demographics']}, 'group': g, 'threshold': threshold,
-                'n_validation': model.counts_[g], 'frozen_small_group': model.counts_[g] < model.min_group,
+                'n_validation': model.counts_[g], 'frozen_small_group': not model.eligible_[g],
+                'merged_row_share': model.merged_row_share_,
                 'fit_split': model.fit_split_, 'unseen_group_threshold': .5})
     return rows, thresholds

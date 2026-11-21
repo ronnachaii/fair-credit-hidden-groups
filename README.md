@@ -15,6 +15,10 @@
 
 ใช้แพ็กเกจที่ติดตั้งแล้ว ไม่ต้อง pip install ในเครื่อง QUICK: GA 2023 ประมาณ 20,000 แถว แบ่ง 60/20/20, 3 seed (17,29,43), full labels เท่านั้น FULL: ทั้งรัฐ, 5 seed, epochs มากขึ้น (`--full`) เปลี่ยนรัฐด้วย `--state GA` ไฟล์ไม่อยู่ในแคชจึงจะดาวน์โหลดผ่าน FFIEC API (ต้องมีอินเทอร์เน็ต)
 
+## ตัวเลือก device และตัววัดเวลา (2026-11-20)
+
+`run_pilot.py --device cpu|cuda` (ค่าเริ่มต้น `cpu` ให้ผลเหมือนเดิม) และ `--output-dir <โฟลเดอร์>` (HMDA เท่านั้น ไม่เขียนทับ `results/`). `cuda` ตั้ง deterministic flags แล้ว (รันซ้ำได้เหมือนเดิมทุกบิตบนอุปกรณ์เดียวกัน) แต่ผลของ SCARF ต่างจาก CPU เล็กน้อย และ GPU ไม่เร็วกว่า CPU กับโมเดลขนาดนี้ จึงแนะนำ CPU. เครื่องมือวัด: `tools/time_t0t3.py`, `tools/bench_device.py`, `tools/compare_devices.py`; ผลอยู่ใน `09_แผนวิเคราะห์/เวลา_T0T3/`. ต้องตั้ง `PYTHONUTF8=1` ก่อนรัน.
+
 ## Colab CPU ฟรี
 
 เปิด `notebooks/pilot_colab.ipynb` เลือก CPU แล้ว Run all เซลล์แรกติดตั้ง requirements (เฉพาะ Colab); ปล่อย REPO_URL ว่างได้ เซลล์ `%%writefile` ฝังโค้ดเดียวกับ `src/` และ tests ครบ ไม่ต้องมี repo หรือข้อมูลเดิม ใช้ urllib ติดตาม redirect และแคช CSV จาก FFIEC:
@@ -138,3 +142,19 @@ QUICK จบ 412.55 วินาที (เพิ่มจากรอบ 5 57.9
 pytest ชุดหลักผ่าน 40 tests; notebook 39 cells / 31 embedded files; check_delivery ผ่าน รวม fallback QUICK 384.45 วินาที ผลทำนาย PP/เกณฑ์และ DRO/กริด/คำอธิบายตรงชุดหลักทั้งหมด fallback หลังรันผ่าน 39 tests ข้าม 1 test หลักฐาน ACS ที่ไม่ได้ฝังไว้ ตรวจสำเนารอบ 5 ด้วย SHA-256 และยืนยัน predictive metrics DRO เดิม 489 แถวตรงกันทั้งหมด เพิ่มไฟล์สุทธิเทียบรอบ 5 ที่บันทึกไว้ 109 ไฟล์รวมสำเนาแล้ว ดู `results/validation.json` ทั้งนี้ยังไม่ได้ทดสอบ Colab รอบ 6 สด
 
 > หมายเหตุ: ใน GitHub เก็บหลักฐานกันข้อมูลรั่วเป็น `results/leakage_audit.json.gz` (ไฟล์เต็ม ~75 MB) — คลายด้วย `gunzip -k results/leakage_audit.json.gz` · เมื่อรัน `run_pilot.py` ใหม่จะสร้าง `leakage_audit.json` ขึ้นเองทุกครั้ง
+
+## แผนวิเคราะห์ v1: pipeline ยืนยัน, ตัวควบคุม, bootstrap และตัวป้องกันข้อมูล (2026-11-20)
+
+ตั้ง `PYTHONUTF8=1` และใช้ `config.make_v1_config()` / `run_pilot.py --v1 --full` สำหรับค่าตรึง v1.0 (ค่าทั้งหมดอยู่ที่เดียวใน `config.py`: `V1_FROZEN`).
+
+| สิ่งที่ต้องการ | คำสั่ง |
+|---|---|
+| pipeline ยืนยัน (ไม่มี group-DRO/JTT) บนรัฐพัฒนา | `python run_pilot.py --v1 --full --state ID --output-dir <โฟลเดอร์ใหม่>` (ผลวิเคราะห์อยู่ใน `<โฟลเดอร์>/confirm/`) |
+| รัน DRO เชิงบริบท (GA 2566 เท่านั้น ไม่เข้าตารางยืนยัน) | `python run_pilot.py --mode context_dro --quick --state GA --output-dir <โฟลเดอร์ใหม่>` |
+| พิมพ์ SHA-256 ของโค้ด+config+แผน (ไม่ tag/commit) | `python tools/freeze_v1.py --plan "<ไฟล์แผน>"`; ตรึงจริง: เพิ่ม `--write` |
+| เทียบสองโฟลเดอร์ผล | `python tools/compare_runs.py <เดิม> <ใหม่>` |
+
+- `src/fairgroups/stats.py` bootstrap ถ่วงน้ำหนักจำนวนเต็ม (ระดับใบคำขอ และ cluster ตามผู้ให้กู้ lei), NMI/ARI/AMI จากตารางไขว้, p ด้านเดียว, IUT, Holm 4 การทดสอบ, Spearman permutation แบบแบ่งชั้นรัฐ
+- `src/fairgroups/controls.py` กลุ่มสุ่มจับคู่ขนาด (permutation), เกณฑ์เดียว k=1, เพดานการกู้คืนประชากร, กลุ่มผสม oracle–สุ่ม (ตัวที่ใช้ประชากรติดป้าย `uses_demographics`)
+- `src/fairgroups/confirmatory.py` รวมเป็นผล H1a/H1b/H3b/H4a ต่อรัฐ-ปี; `src/fairgroups/access_guard.py` ปฏิเสธ CA/OH/FL 2566 และทุกรัฐปี 2567 ถ้าไม่ส่ง `--unlock-R/--unlock-C <SHA-256ของแผนที่ตรึง> --plan-file ...` และไม่มี `freeze/v1_0_manifest.json` ที่ตรงกับโค้ดปัจจุบัน
+- ผล QUICK/เวลาของรอบนี้อยู่ที่ `09_แผนวิเคราะห์/เวลา_T0T3/` (ไฟล์ `งบเวลา_6รัฐปี_หลังเพิ่มโค้ด.md`)

@@ -43,7 +43,7 @@ def generate_postprocess_report(output):
         '- raw/SCARF ใช้ global cluster c ที่ fit train เท่านั้น k=2,4,8; GEORGE ใช้ hidden ERM และเลือก k ด้วย silhouette train; HBAC ใช้ OOF error train; geoproxy ใช้สัดส่วนประชากรระดับพื้นที่ (เป็น baseline ที่อาศัย proxy เชื้อชาติ)',
         '- random-k ใช้ hash แบบมี seed ของ x ที่แปลงแล้ว mod k ไม่ใช้ y/ประชากร และให้กลุ่มเดิมได้ตอนอนุมาน; รวม k=2,4,8 เทียบขนาดกลุ่ม raw/SCARF; ไม่รับรองว่ากลุ่มสุ่มจะไร้ความสัมพันธ์โดยบังเอิญในชุดเล็ก',
         '- PP-oracle ใช้ race_eth × sex ตอนหาเกณฑ์และตอนทำนาย เป็นเพดานบนเชิงกลไกเท่านั้น ไม่ใช่วิธีใช้จริง; Unknown เป็นกลุ่มแยกในการ fit แต่ไม่นับ fairness ตามกฎเดิม',
-        '- เกณฑ์ fit เฉพาะ validation: กริด 0.05–0.95 ทีละ 0.01 รวม quantile 101 จุด, 0.5 และเกณฑ์ปฏิเสธทั้งหมด; กลุ่ม validation < min_dro_group=50 ถูกตรึง 0.5; กลุ่มใหม่ไม่พบใช้ 0.5',
+        '- เกณฑ์ fit เฉพาะ validation: กริด 0.05–0.95 ทีละ 0.01 รวม quantile 101 จุด, 0.5 และเกณฑ์ปฏิเสธทั้งหมด; กลุ่ม validation ที่ไม่ครบ >= 200 ใบและแต่ละคลาส >= 30 ใบ (แผน §2.6) ใช้เกณฑ์รวม 0.5 และบันทึก threshold_merged_row_share; กลุ่มใหม่ไม่พบใช้ 0.5',
         '- Parity ค้นช่วงอัตราอนุมัติด้วย bisection 20 ครั้ง เลือกจำนวนทายถูกสูงสุดที่ทำได้ในแต่ละช่วง; หาช่องว่างต่ำสุดบนกริดภายในความละเอียดประมาณ 1e-6',
         '- EO ลด max(TPR gap,FPR gap) ด้วย coordinate descent ไม่เกิน 10 sweeps เริ่มทั้ง 0.5 และ parity; ไม่รับรอง global optimum; อัตราที่ไม่มีตัวหารไม่นับ',
         '- ทั้งสองเป้าหมายบังคับ validation accuracy ≥ ฐานเดียวกันที่ threshold 0.5 − 0.02; มีเกณฑ์เดิมเป็น feasible fallback เสมอ จึงไม่ต้องเลือกตัวที่ตก guard',

@@ -1,11 +1,12 @@
 """SCARF ไม่มีป้ายกำกับ และ error representation จาก OOF ภายใน train"""
+import time
 import numpy as np
 import torch
 from torch import nn
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from lightgbm import LGBMClassifier
-from .models import set_seed
+from .models import set_seed, resolve_device
 
 
 class ScarfEncoder(nn.Module):
@@ -28,21 +29,24 @@ def contrastive_loss(a, b, temperature):
     z = nn.functional.normalize(torch.cat([a, b]), dim=1)
     similarity = z @ z.T / temperature
     similarity.fill_diagonal_(-1e9)
-    targets = (torch.arange(2*n) + n) % (2*n)
+    targets = (torch.arange(2*n, device=z.device) + n) % (2*n)
     return nn.functional.cross_entropy(similarity, targets)
 
 
-def train_scarf(frame, processor, config, seed):
-    """ไม่รับ y หรือข้อมูลประชากร และ donor มาจาก train เท่านั้น"""
-    set_seed(seed, config.threads)
+def train_scarf(frame, processor, config, seed, profile=None):
+    """ไม่รับ y หรือข้อมูลประชากร และ donor มาจาก train เท่านั้น
+    profile: dict ที่ไม่บังคับ สะสมวินาทีของส่วน CPU (สร้าง view/แปลง) แยกจากส่วนโครงข่าย เพื่อวัดเวลา"""
+    device = resolve_device(getattr(config, "device", "cpu"))
+    set_seed(seed, config.threads, device.type)
     x = processor.transform(frame)
-    model = ScarfEncoder(x.shape[1], config.hidden, config.embedding)
+    model = ScarfEncoder(x.shape[1], config.hidden, config.embedding).to(device)
     model.fit_ids_ = frame.index.to_numpy().copy()
     optimizer = torch.optim.AdamW(model.parameters(), lr=config.learning_rate,
                                  weight_decay=config.weight_decay)
     rng = np.random.default_rng(seed)
     # สร้าง corrupted view ครั้งละ epoch เพื่อให้หมวดหมู่ยังเป็นค่าที่ถูกต้อง
     for _ in range(config.scarf_epochs):
+        t_prep = time.perf_counter()
         corrupted = frame.copy()
         for col in frame.columns:
             donors = rng.integers(0, len(frame), len(frame))
@@ -51,16 +55,22 @@ def train_scarf(frame, processor, config, seed):
         cx = processor.transform(corrupted)
         order = rng.permutation(len(x))
         model.train()
+        if device.type == 'cuda': torch.cuda.synchronize()
+        t_net = time.perf_counter()
+        if profile is not None: profile['cpu_prep_seconds'] = profile.get('cpu_prep_seconds', 0.) + t_net - t_prep
         for start in range(0, len(x), config.batch_size):
             ids = order[start:start+config.batch_size]
             if len(ids) < 2:
                 continue
             optimizer.zero_grad()
-            a = model.projector(model(torch.as_tensor(x[ids])))
-            b = model.projector(model(torch.as_tensor(cx[ids])))
+            a = model.projector(model(torch.as_tensor(x[ids]).to(device)))
+            b = model.projector(model(torch.as_tensor(cx[ids]).to(device)))
             loss = contrastive_loss(a, b, config.temperature)
             loss.backward()
             optimizer.step()
+        if profile is not None:
+            if device.type == 'cuda': torch.cuda.synchronize()
+            profile['network_seconds'] = profile.get('network_seconds', 0.) + time.perf_counter() - t_net
     return model
 
 
@@ -68,7 +78,8 @@ def encode_scarf(model, x):
     """แช่แข็ง encoder ตอนจัดกลุ่ม ไม่ใช้ projection head"""
     model.eval()
     with torch.no_grad():
-        return np.concatenate([model(torch.as_tensor(x[i:i+2048])).numpy()
+        device = next(model.parameters()).device
+        return np.concatenate([model(torch.as_tensor(x[i:i+2048]).to(device)).cpu().numpy()
                                for i in range(0, len(x), 2048)])
 
 

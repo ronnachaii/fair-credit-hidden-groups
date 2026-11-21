@@ -69,5 +69,10 @@ def environment(config):
             "cpu": cpu_model,
             "logical_cpus": psutil.cpu_count(),
             "ram_gb": psutil.virtual_memory().total / 1024**3,
-            "gpu_available": torch.cuda.is_available(), "device_used": "cpu",
+            "gpu_available": torch.cuda.is_available(),
+            "gpu_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+            "device_used": getattr(config, "device", "cpu"),
+            "deterministic_flags": {"use_deterministic_algorithms": True, "cudnn_deterministic": True,
+                                    "cudnn_benchmark": False, "tf32": False,
+                                    "CUBLAS_WORKSPACE_CONFIG": ":4096:8 (cuda only)"},
             "config": config.to_dict(), "seeds": list(config.seeds)}

@@ -1,7 +1,8 @@
 """จัดกลุ่ม train ภายในคลาส และทำนายรายใหม่โดยไม่รู้ y"""
 import numpy as np
 from sklearn.cluster import KMeans
-from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score, davies_bouldin_score
+from sklearn.metrics import (adjusted_rand_score, adjusted_mutual_info_score, normalized_mutual_info_score,
+                             silhouette_score, davies_bouldin_score)
 from sklearn.preprocessing import StandardScaler
 from .hmda import reference_groups, UNKNOWN
 from .models import predict_mlp
@@ -53,7 +54,8 @@ class GeoGroups:
 def hidden(model,x):
     model.eval()
     with torch.no_grad():
-        return np.concatenate([model.layers[:-1](torch.as_tensor(x[i:i+2048])).numpy() for i in range(0,len(x),2048)])
+        device=next(model.parameters()).device
+        return np.concatenate([model.layers[:-1](torch.as_tensor(x[i:i+2048]).to(device)).cpu().numpy() for i in range(0,len(x),2048)])
 
 
 def group_scores(x, labels, s, seed):
@@ -64,7 +66,9 @@ def group_scores(x, labels, s, seed):
     for name, group in reference_groups(s).items():
         keep = group != UNKNOWN
         out[f'ari_{name}'] = adjusted_rand_score(group[keep],labels[keep])
-        out[f'nmi_{name}'] = normalized_mutual_info_score(group[keep],labels[keep])
+        # ระบุ average_method ให้ชัด ไม่พึ่งค่าเริ่มต้นของเวอร์ชันไลบรารี (แผนวิเคราะห์ §2.2)
+        out[f'nmi_{name}'] = normalized_mutual_info_score(group[keep],labels[keep],average_method='arithmetic')
+        out[f'ami_{name}'] = adjusted_mutual_info_score(group[keep],labels[keep],average_method='arithmetic')
         out[f'alignment_excluded_{name}'] = int((~keep).sum())
     return out
 
