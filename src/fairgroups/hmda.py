@@ -13,6 +13,25 @@ NUMERIC = 'loan_amount loan_to_value_ratio property_value income debt_to_income_
 CATEGORICAL = 'loan_type lien_status preapproval construction_method applicant_credit_score_type submission_of_application initially_payable_to_institution aus-1 conforming_loan_limit derived_loan_product_type derived_msa-md county_code lei'.split()
 FEATURES = NUMERIC + CATEGORICAL
 UNKNOWN = 'Unknown'
+# คอลัมน์ที่ load_hmda ใช้กรองและสร้างกลุ่มประชากร (นอกเหนือจาก FEATURES)
+FILTER_COLUMNS = ['loan_purpose', 'occupancy_type', 'business_or_commercial_purpose', 'reverse_mortgage',
+                  'open-end_line_of_credit', 'total_units', 'derived_dwelling_category', 'action_taken']
+DEMOGRAPHIC_COLUMNS = ['derived_race', 'derived_ethnicity', 'derived_sex', 'applicant_age']
+REQUIRED_COLUMNS = list(dict.fromkeys(FILTER_COLUMNS + DEMOGRAPHIC_COLUMNS + FEATURES))
+
+
+class SchemaError(ValueError):
+    """CSV ขาดคอลัมน์ที่ pipeline ต้องใช้ (ตรวจจาก header เท่านั้น)"""
+
+
+def check_header(path, required=REQUIRED_COLUMNS):
+    """อ่านเฉพาะบรรทัด header (ชื่อคอลัมน์ ไม่อ่านแถว) แล้ว raise SchemaError พร้อมรายชื่อที่หาย"""
+    header = pd.read_csv(path, nrows=0).columns
+    absent = [c for c in required if c not in set(header)]
+    if absent:
+        raise SchemaError(f'{Path(path).name}: ขาดคอลัมน์ที่ pipeline ต้องใช้ {len(absent)} คอลัมน์: {", ".join(absent)} '
+                          '(ไม่แมปชื่ออัตโนมัติ: ให้บันทึกใน deviations.md และตัดสินใจก่อน)')
+    return list(header)
 
 
 def sensitive_column(c):
@@ -67,6 +86,7 @@ def load_hmda(root, state='GA', year=2023, access=None):
         temp = path.with_suffix('.part')
         urllib.request.urlretrieve(url, temp)
         temp.replace(path)
+    check_header(path)
     frame = pd.read_csv(path, low_memory=False)
     stages = [{'stage':'ข้อมูลต้นทาง', 'n':len(frame)}]
     filters = [('ซื้อที่อยู่อาศัย', pd.to_numeric(frame.loan_purpose, errors='coerce') == 1),

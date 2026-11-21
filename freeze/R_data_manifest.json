@@ -1,0 +1,36 @@
+{
+  "CA": {
+    "file": "data\\hmda\\hmda_2023_CA.csv",
+    "bytes": 241327673,
+    "sha256": "b15a32aaee37c0747c640d91a2123ccee13d585b4d256e34c78345f6e652c1c9",
+    "downloaded_utc": "2026-11-21T00:35:34+00:00",
+    "existed_before": false,
+    "url": "https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states=CA&years=2023&actions_taken=1,2,3",
+    "rows_raw": 628092,
+    "rows_after_filters": 256001,
+    "lei_unique": 816,
+    "columns": 99,
+    "frame_mem_gb": 0.25,
+    "user": "RONNACHAI",
+    "commit": "7df753b44afd4a0f88911e3353f7e94027895528",
+    "plan_sha256": "f2f6fdd33404becc6a5ffee68c04b7f28aa2c77146b7a4857dc1aefbd3fd99e1",
+    "note": "downloaded via hmda.load_hmda (guarded, unlock-R) by Dev 2026-11-21; first CA fetch landed in wrong folder and was moved to data/hmda, same file"
+  },
+  "OH": {
+    "file": "data\\hmda\\hmda_2023_OH.csv",
+    "bytes": 119909380,
+    "sha256": "fad5fab404c1b33323afb335f0d969b7200aa4b0975447805b6daf222b50c54f",
+    "downloaded_utc": "2026-11-21T00:35:49+00:00",
+    "existed_before": false,
+    "url": "https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states=OH&years=2023&actions_taken=1,2,3",
+    "rows_raw": 313333,
+    "rows_after_filters": 126210,
+    "lei_unique": 791,
+    "columns": 99,
+    "frame_mem_gb": 0.12,
+    "user": "RONNACHAI",
+    "commit": "7df753b44afd4a0f88911e3353f7e94027895528",
+    "plan_sha256": "f2f6fdd33404becc6a5ffee68c04b7f28aa2c77146b7a4857dc1aefbd3fd99e1",
+    "note": "downloaded via hmda.load_hmda (guarded, unlock-R) by Dev 2026-11-21; first CA fetch landed in wrong folder and was moved to data/hmda, same file"
+  }
+}
