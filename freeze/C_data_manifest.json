@@ -1,0 +1,47 @@
+{
+  "GA": {
+    "file": "_C_2026-11\\data\\hmda\\hmda_2024_GA.csv",
+    "bytes": 126448646,
+    "sha256": "c76d35a92afdc6f3a129d3a0ed9daa4151f0c4c767c1e73993eeae44b13ea1d7",
+    "downloaded_utc": "2026-11-21T13:04:13+00:00",
+    "existed_before": false,
+    "url": "https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states=GA&years=2024&actions_taken=1,2,3",
+    "user": "RONNACHAI",
+    "commit": "9598fc3d103ae5a13613e2b9a7d906b794d69b28",
+    "plan_sha256": "2e422e2a8d6322e1c53004c9f4acef169e460888705156068df81beed270329a",
+    "tier": "C",
+    "note": "one-time download by Dev 2026-11-21 via guarded access (require_access, open_log appended); no rows read",
+    "columns": 99,
+    "schema_check": "OK"
+  },
+  "CA": {
+    "file": "_C_2026-11\\data\\hmda\\hmda_2024_CA.csv",
+    "bytes": 277680063,
+    "sha256": "fdc8098169669e309115502a1f2ea4cf7611ce13c254ae7acccfd4ae282eb3f8",
+    "downloaded_utc": "2026-11-21T13:04:32+00:00",
+    "existed_before": false,
+    "url": "https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states=CA&years=2024&actions_taken=1,2,3",
+    "user": "RONNACHAI",
+    "commit": "9598fc3d103ae5a13613e2b9a7d906b794d69b28",
+    "plan_sha256": "2e422e2a8d6322e1c53004c9f4acef169e460888705156068df81beed270329a",
+    "tier": "C",
+    "note": "one-time download by Dev 2026-11-21 via guarded access (require_access, open_log appended); no rows read",
+    "columns": 99,
+    "schema_check": "OK"
+  },
+  "OH": {
+    "file": "_C_2026-11\\data\\hmda\\hmda_2024_OH.csv",
+    "bytes": 128764813,
+    "sha256": "2473dc91a218fc857650198e081243f0df06bb16607f8f376f50763b85074b9b",
+    "downloaded_utc": "2026-11-21T13:04:59+00:00",
+    "existed_before": false,
+    "url": "https://ffiec.cfpb.gov/v2/data-browser-api/view/csv?states=OH&years=2024&actions_taken=1,2,3",
+    "user": "RONNACHAI",
+    "commit": "9598fc3d103ae5a13613e2b9a7d906b794d69b28",
+    "plan_sha256": "2e422e2a8d6322e1c53004c9f4acef169e460888705156068df81beed270329a",
+    "tier": "C",
+    "note": "one-time download by Dev 2026-11-21 via guarded access (require_access, open_log appended); no rows read",
+    "columns": 99,
+    "schema_check": "OK"
+  }
+}

@@ -61,8 +61,11 @@ def hidden(model,x):
 def group_scores(x, labels, s, seed):
     out = {'n_clusters':len(np.unique(labels)), 'silhouette':np.nan, 'davies_bouldin':np.nan}
     if 1 < len(np.unique(labels)) < len(labels):
-        out.update(silhouette=float(silhouette_score(x,labels,sample_size=min(1000,len(labels)),random_state=seed)),
-                   davies_bouldin=float(davies_bouldin_score(x,labels)))
+        try:
+            sil = float(silhouette_score(x,labels,sample_size=min(1000,len(labels)),random_state=seed))
+        except ValueError:   # sampled subset contains a single label (deviation 2026-11-21, see deviations.md)
+            sil = np.nan
+        out.update(silhouette=sil, davies_bouldin=float(davies_bouldin_score(x,labels)))
     for name, group in reference_groups(s).items():
         keep = group != UNKNOWN
         out[f'ari_{name}'] = adjusted_rand_score(group[keep],labels[keep])
