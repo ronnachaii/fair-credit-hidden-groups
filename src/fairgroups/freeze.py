@@ -26,10 +26,11 @@ def sha256_file(path):
 
 def code_files(root=ROOT, tier="v1.0"):
     """ไฟล์โค้ด+config ที่ตรึง (ไม่รวม tests, README, results, data)
-    v1.0 = รายการเดิม; v2.0 = รายการเดิม + src/fairgroups/design_b/*.py (tools/*.py รวม freeze_v2.py อยู่แล้ว)"""
+    v1.0 = รายการเดิม; v2.0 = รายการเดิม + src/fairgroups/design_b/*.py (tools/*.py รวม freeze_v2.py อยู่แล้ว)
+    v2.1 (addendum หลังเปิด C) = รายการเดียวกับ v2.0"""
     root = Path(root)
     files = sorted(root.glob("src/fairgroups/*.py")) + sorted(root.glob("tools/*.py"))
-    if tier == "v2.0":
+    if tier in ("v2.0", "v2.1"):
         files += sorted(root.glob("src/fairgroups/design_b/*.py"))
     files += [p for p in [root / "config.py", root / "run_pilot.py", root / "requirements.txt"] if p.exists()]
     # สคริปต์เลือกรัฐและผลของมัน (แผน §4.2 / §9 ข้อ 5) อยู่ในโฟลเดอร์ 09_แผนวิเคราะห์ ข้างโฟลเดอร์โค้ด
@@ -78,6 +79,10 @@ def verify_manifest(tier, plan_sha256, root=ROOT, freeze_dir=FREEZE_DIR):
     saved = json.loads(path.read_text(encoding="utf-8"))
     if saved.get("plan_sha256") != plan_sha256:
         return False, "SHA-256 ของแผนไม่ตรงกับ manifest ที่ตรึงไว้"
+    if saved.get("supersedes"):
+        ok, info = _verify_addendum(saved, freeze_dir)
+        if not ok:
+            return False, info
     now = build_manifest_files_only(root, tier)
     changed = sorted(k for k in set(now) | set(saved["files"]) if now.get(k) != saved["files"].get(k))
     if changed:
@@ -87,6 +92,25 @@ def verify_manifest(tier, plan_sha256, root=ROOT, freeze_dir=FREEZE_DIR):
     if drift:
         return False, f"เวอร์ชันไลบรารีไม่ตรงกับที่ตรึง: {drift}"
     return True, saved["code_config_combined_sha256"]
+
+
+def _verify_addendum(saved, freeze_dir):
+    """addendum (v2.1) ต้องอ้างอิง manifest เดิมที่ไม่ถูกแก้ แผนเดิม และอธิบายทุกไฟล์ที่ต่างจากของเดิมพร้อมเหตุผล"""
+    base_path = manifest_path(saved["supersedes"], freeze_dir)
+    if not base_path.exists():
+        return False, f"ไม่พบ manifest เดิม {saved['supersedes']} ที่ addendum อ้างอิง"
+    if sha256_file(base_path) != saved.get("base_manifest_file_sha256"):
+        return False, f"manifest เดิม {saved['supersedes']} ถูกแก้หลังทำ addendum"
+    base = json.loads(base_path.read_text(encoding="utf-8"))
+    if base.get("plan_sha256") != saved.get("plan_sha256"):
+        return False, "addendum ใช้แผนคนละฉบับกับ manifest เดิม"
+    changes = saved.get("changes", {})
+    for k in sorted(set(base["files"]) | set(saved["files"])):
+        if base["files"].get(k) != saved["files"].get(k):
+            c = changes.get(k)
+            if not c or not c.get("reason") or c.get("sha256_before") != base["files"].get(k)                     or c.get("sha256_after") != saved["files"].get(k):
+                return False, f"ไฟล์ {k} ต่างจาก manifest เดิมแต่ addendum ไม่ได้บันทึกเหตุผล/hash ให้ตรง"
+    return True, ""
 
 
 def build_manifest_files_only(root=ROOT, tier="v1.0"):

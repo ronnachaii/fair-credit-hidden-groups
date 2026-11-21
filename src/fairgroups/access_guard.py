@@ -49,6 +49,15 @@ def require_access(state, year=2023, unlock_R=None, unlock_C=None, plan_file=Non
     if tier == "UNLISTED":
         raise AccessDenied(f"{state} {year} ไม่อยู่ในแผนวิเคราะห์ ปฏิเสธการโหลด (เพิ่มรัฐ/ปีหลังเห็นผลถือเป็น post-hoc)")
     flag, version, flag_name = ("v1.0", unlock_R, "--unlock-R") if tier == "R" else ("v2.0", unlock_C, "--unlock-C")
+    if tier == "R" and flag_value_ok(unlock_R) and flag_value_ok(unlock_C) and unlock_R.strip().lower() == unlock_C.strip().lower():
+        # design B re-reads the 2023 source of CA/OH together with 2024: allowed under the v2.1 addendum when BOTH unlocks
+        # carry the v2.0 plan SHA (checked against the plan file + manifest v2.1); otherwise the plain v1.0 path below applies
+        if plan_file and Path(plan_file).exists() and freeze.sha256_file(plan_file) == unlock_C.strip().lower():
+            ok, info = freeze.verify_manifest("v2.1", unlock_C.strip().lower(), root=root, freeze_dir=freeze_dir)
+            if ok:
+                if log:
+                    _log_open(state, year, tier, info, freeze_dir)
+                return tier
     if not flag_value_ok(version):
         raise AccessDenied(f"{state} {year} เป็นชุดทดสอบระดับ {tier}: ต้องส่ง {flag_name} <SHA-256 ของไฟล์แผนที่ตรึง> "
                            f"พร้อม --plan-file และ manifest {flag}")
@@ -57,9 +66,19 @@ def require_access(state, year=2023, unlock_R=None, unlock_C=None, plan_file=Non
     actual = freeze.sha256_file(plan_file)
     if actual != version.strip().lower():
         raise AccessDenied(f"ค่า {flag_name} ไม่ตรงกับ SHA-256 ของไฟล์แผน ({actual[:12]}...)")
-    ok, info = freeze.verify_manifest(flag, actual, root=root, freeze_dir=freeze_dir)
-    if not ok:
-        raise AccessDenied(info)
+    if tier == "C":      # C: manifest v2.1 (addendum) first, then the original v2.0
+        errors = []
+        for v in ("v2.1", "v2.0"):
+            ok, info = freeze.verify_manifest(v, actual, root=root, freeze_dir=freeze_dir)
+            if ok:
+                break
+            errors.append(f"[{v}] {info}")
+        else:
+            raise AccessDenied("; ".join(errors))
+    else:
+        ok, info = freeze.verify_manifest(flag, actual, root=root, freeze_dir=freeze_dir)
+        if not ok:
+            raise AccessDenied(info)
     if log:
         _log_open(state, year, tier, info, freeze_dir)
     return tier
