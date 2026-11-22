@@ -42,3 +42,9 @@
 - `tools/freeze_v2.py`: `--addendum`, `--write-addendum`, `--tier`.
 - Tests: `tests/test_freeze_addendum.py` (pass cases and blocked cases: wrong plan SHA, no unlock, unlocks disagree, missing reason, edited base manifest, code drift after v2.1, unlisted state).
 - Runs completed before the edits (A GA, A CA, B GA) used the v2.0-frozen code unchanged.
+
+## 2026-11-22 - reruns under addendum v2.1 (guard passed; code+config SHA cd44e13e...acc43e)
+
+- A OH 2024 rerun (first attempt failed, kept as `_C_2026-11/A/OH_failed_attempt1/` + `A_OH.log`/`A_OH.err.log`): rc=0, 2121 s, output `_C_2026-11/A/OH/`, log `A_OH_retry.log`.
+- B CA (retry of the 9-second guard refusal; `B_CA.log` kept): rc=0, 1552 s. B OH: rc=0, 834 s. Outputs `_C_2026-11/B/<ST>/design_B/`.
+- Silhouette NaN in A OH: 5 of 100 rows in `A/OH/clustering_results.csv` (scarf, definition c, k=2, all five seeds 17/29/43/59/71); GA and CA have 0 NaN. Confirmatory table uses fixed k_main=8 (confirmatory.py), so it does not use the silhouette-based k selection; `run.py` k selection and `proposed_selected` in postprocess_results.csv do (see report).
