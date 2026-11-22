@@ -48,3 +48,26 @@
 - A OH 2024 rerun (first attempt failed, kept as `_C_2026-11/A/OH_failed_attempt1/` + `A_OH.log`/`A_OH.err.log`): rc=0, 2121 s, output `_C_2026-11/A/OH/`, log `A_OH_retry.log`.
 - B CA (retry of the 9-second guard refusal; `B_CA.log` kept): rc=0, 1552 s. B OH: rc=0, 834 s. Outputs `_C_2026-11/B/<ST>/design_B/`.
 - Silhouette NaN in A OH: 5 of 100 rows in `A/OH/clustering_results.csv` (scarf, definition c, k=2, all five seeds 17/29/43/59/71); GA and CA have 0 NaN. Confirmatory table uses fixed k_main=8 (confirmatory.py), so it does not use the silhouette-based k selection; `run.py` k selection and `proposed_selected` in postprocess_results.csv do (see report).
+
+## 2026-11-22 - plan/code mismatch noted (not a post-C fix): H3b uses the CI lower bound of delta-accuracy
+
+- Plan v2.0 clarification P4 (V1): the delta-accuracy criterion >= -0.02 uses the POINT estimate. Code frozen in manifest v2.0/v2.1 (`src/fairgroups/confirmatory.py`, `_hypotheses`):
+  - line ~297: `H3b` passes_state = `lower(B_rand) > m and lower(B_single) > m and lower(dAcc_method) > da` -> the delta-acc part uses the one-sided 95% LOWER bound (p_state uses `p_greater(dAcc_method, da)` from the bootstrap).
+  - line ~308 `flag_benefit_appears` uses the point value (`point["dAcc_method"][0] >= da`), consistent with P4.
+  - So P4 holds for the flag but not for the H3b test. Code NOT changed (frozen; this is a mismatch present since v1.0/R, not introduced after opening C).
+- Re-check from result files (`confirm_bootstrap_summary_{row,lei}.csv`, m = 0.01, da = -0.02; "point" variant = lower(B_rand) > m, lower(B_single) > m, point dAcc >= da):
+
+| set | boot | lower B_rand | lower B_single | dAcc point | dAcc lower | H3b (lower, as run) | H3b (point variant) |
+|---|---|---|---|---|---|---|---|
+| C A GA | row | 0.0147 | 0.0163 | -0.0187 | -0.0205 | fail | **pass** |
+| C A GA | lei | -0.0106 | -0.0096 | -0.0187 | -0.0236 | fail | fail |
+| C A CA | row | 0.0044 | -0.0009 | -0.0144 | -0.0155 | fail | fail |
+| C A CA | lei | 0.0009 | -0.0027 | -0.0144 | -0.0268 | fail | fail |
+| C A OH | row | -0.0397 | -0.0217 | -0.0187 | -0.0203 | fail | fail |
+| C A OH | lei | -0.0441 | -0.0226 | -0.0187 | -0.0226 | fail | fail |
+| R CA | row | 0.0073 | -0.0057 | -0.0161 | -0.0173 | fail | fail |
+| R CA | lei | 0.0036 | -0.0090 | -0.0161 | -0.0336 | fail | fail |
+| R OH | row | -0.0236 | -0.0222 | -0.0218 | -0.0235 | fail | fail |
+| R OH | lei | -0.0275 | -0.0266 | -0.0218 | -0.0338 | fail | fail |
+
+- Result of the re-check: with the point variant the only per-state-bootstrap cell that changes is C A GA / row (fail -> pass). The state-level decision uses the conservative (max) of row and lei, and GA lei still fails (B conditions not met), so GA stays "fail"; CA and OH fail in both bootstraps because the B_rand/B_single conditions fail, independent of the dAcc rule. Hence the final H3b outcome is unchanged (not passed in any state, so not passed overall), in C and in R (R CA/OH all fail on the B conditions; R dAcc points CA -0.0161, OH -0.0218 as in P4). Caveat: GA row-only would flip, and the p-values (`p_state`) are still those of the lower-bound test.
